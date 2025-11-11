@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_product_attribute_form_inherit_shoppingfeed" model="ir.ui.view">
+        <field name="name">product.attribute.form.shoppingfeed</field>
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.product_attribute_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="shoppingfeed_code_name_attribute" />
+                <field name="shoppingfeed_export" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

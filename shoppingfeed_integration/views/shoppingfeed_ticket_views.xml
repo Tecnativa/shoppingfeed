@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_shoppingfeed_ticket_tree" model="ir.ui.view">
+        <field name="name">shoppingfeed.ticket.tree</field>
+        <field name="model">shoppingfeed.ticket</field>
+        <field name="arch" type="xml">
+            <list
+                string="Shoppingfeed Tickets"
+                decoration-success="state == 'succeed'"
+                decoration-danger="state == 'failed'"
+            >
+                <field name="name" string="Ticket ID" />
+                <field name="store_id" />
+                <field name="order_id" />
+                <field name="shoppingfeed_reference" string="Marketplace Ref" />
+                <field name="ticket_type" />
+                <field name="state" widget="badge" />
+                <field name="message" />
+                <field
+                    name="company_id"
+                    options="{'no_create': True}"
+                    groups="base.group_multi_company"
+                    optional="hide"
+                />
+                <field name="link" widget="url" string="Ticket URL" optional="hide" />
+                <field name="create_date" string="Created On" optional="hide" />
+            </list>
+        </field>
+    </record>
+    <record id="action_shoppingfeed_ticket" model="ir.actions.act_window">
+        <field name="name">Shoppingfeed Tickets</field>
+        <field name="res_model">shoppingfeed.ticket</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Shoppingfeed tickets found.
+            </p>
+        </field>
+    </record>
+</odoo>

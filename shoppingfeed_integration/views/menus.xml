@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem
+        id="menu_shoppingfeed_root"
+        name="Shoppingfeed"
+        sequence="100"
+        web_icon="shoppingfeed_integration,static/description/icon.png"
+        groups="shoppingfeed_integration.group_shoppingfeed_user"
+    />
+    <menuitem
+        id="menu_shoppingfeed_marketplace_orders"
+        name="Marketplace Orders"
+        parent="menu_shoppingfeed_root"
+        action="action_shoppingfeed_marketplace_orders"
+        sequence="10"
+    />
+    <menuitem
+        id="menu_shoppingfeed_store"
+        name="Stores"
+        parent="menu_shoppingfeed_root"
+        action="action_shoppingfeed_store"
+        sequence="15"
+        groups="shoppingfeed_integration.group_shoppingfeed_manager"
+    />
+    <menuitem
+        id="menu_shoppingfeed_ticket"
+        name="Tickets"
+        parent="menu_shoppingfeed_root"
+        action="action_shoppingfeed_ticket"
+        sequence="20"
+    />
+    <menuitem
+        id="menu_shoppingfeed_channel"
+        name="Channels"
+        parent="menu_shoppingfeed_root"
+        action="action_shoppingfeed_channel"
+        sequence="18"
+        groups="shoppingfeed_integration.group_shoppingfeed_manager"
+    />
+    <menuitem
+        id="menu_shoppingfeed_log"
+        name="Order Logs"
+        parent="menu_shoppingfeed_root"
+        action="action_shoppingfeed_log"
+        sequence="30"
+        groups="shoppingfeed_integration.group_shoppingfeed_user"
+    />
+</odoo>

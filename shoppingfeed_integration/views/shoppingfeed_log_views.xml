@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_shoppingfeed_log_list" model="ir.ui.view">
+        <field name="name">shoppingfeed.log.list</field>
+        <field name="model">shoppingfeed.log</field>
+        <field name="arch" type="xml">
+            <list string="Order Logs" create="false" edit="false">
+                <field name="create_date" string="Date" />
+                <field name="name" />
+                <field name="store_id" />
+                <field name="channel_id" />
+                <field name="shoppingfeed_reference" />
+                <field name="error_message" />
+            </list>
+        </field>
+    </record>
+    <record id="action_shoppingfeed_log" model="ir.actions.act_window">
+        <field name="name">Order Logs</field>
+        <field name="res_model">shoppingfeed.log</field>
+        <field name="view_mode">list</field>
+    </record>
+</odoo>

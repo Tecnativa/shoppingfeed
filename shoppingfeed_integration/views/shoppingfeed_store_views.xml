@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_shoppingfeed_store_tree" model="ir.ui.view">
+        <field name="name">shoppingfeed.store.tree</field>
+        <field name="model">shoppingfeed.store</field>
+        <field name="arch" type="xml">
+            <list decoration-warning="demo_mode">
+                <field name="name" />
+                <field
+                    name="company_id"
+                    options="{'no_create': True}"
+                    groups="base.group_multi_company"
+                />
+                <field name="country_id" />
+                <field name="catalog_id" />
+                <field name="email" />
+                <field name="status" />
+                <field name="demo_mode" />
+            </list>
+        </field>
+    </record>
+    <record id="view_shoppingfeed_store_form" model="ir.ui.view">
+        <field name="name">shoppingfeed.store.form</field>
+        <field name="model">shoppingfeed.store</field>
+        <field name="arch" type="xml">
+            <form string="Shoppingfeed Store">
+                <header>
+                    <button
+                        name="action_get_access_token"
+                        string="Sync Account"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                </header>
+                <sheet>
+                    <widget
+                        name="web_ribbon"
+                        title="DEMO MODE"
+                        bg_color="text-bg-danger"
+                        invisible="not demo_mode"
+                    />
+                    <div
+                        class="oe_button_box"
+                        name="button_box"
+                        groups="base.group_system"
+                    >
+                        <button
+                            name="action_toggle_demo_mode"
+                            invisible="demo_mode"
+                            class="oe_stat_button"
+                            type="object"
+                            icon="fa-play"
+                        >
+                            <div class="o_stat_info o_field_widget">
+                                <span class="text-success">Production</span>
+                                <span class="o_stat_text">Mode</span>
+                            </div>
+                        </button>
+                        <button
+                            name="action_toggle_demo_mode"
+                            invisible="not demo_mode"
+                            class="oe_stat_button"
+                            type="object"
+                            icon="fa-flask"
+                        >
+                            <div class="o_stat_info o_field_widget">
+                                <span
+                                    class="o_stat_text fw-bold text-danger"
+                                >Demo Mode</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div
+                        class="alert alert-danger"
+                        role="alert"
+                        invisible="not demo_mode"
+                    >
+                        <strong>Demo Mode is active.</strong>
+                        All outgoing write requests to ShoppingFeed are
+                        blocked (acknowledge, inventory, shipments,
+                        invoices). Orders will still be imported.
+                    </div>
+                    <group>
+                        <group string="Store Info">
+                            <field name="name" />
+                            <field
+                                name="company_id"
+                                options="{'no_create': True}"
+                                groups="base.group_multi_company"
+                            />
+                            <field name="country_id" />
+                            <field name="lang_id" />
+                            <field name="catalog_id" />
+                            <field name="status" />
+                        </group>
+                        <group string="Credentials">
+                            <field name="username" />
+                            <field name="password" password="True" />
+                            <field name="access_token" readonly="1" />
+                            <field name="token_type" readonly="1" />
+                        </group>
+                    </group>
+                    <group string="Account Information">
+                        <field name="email" />
+                        <field name="website_id" options="{'no_create': True}" />
+                        <field name="feed_url" readonly="1" widget="url" />
+                        <field
+                            name="channel_ids"
+                            widget="many2many_tags"
+                            readonly="1"
+                        />
+                    </group>
+                    <notebook>
+                        <page string="Exportable Products">
+                            <group>
+                                <field name="export_only_selected" />
+                            </group>
+                            <group string="Export Product Types">
+                                <field name="export_type_goods" />
+                                <field name="export_type_service" />
+                                <field name="export_type_combo" />
+                            </group>
+                            <group string="Export Rules">
+                                <field name="export_out_of_stock" />
+                                <field name="export_disabled_products" />
+                                <field name="export_not_salable_products" />
+                            </group>
+                        </page>
+                        <page string="Stock">
+                            <group>
+                                <field name="use_actual_stock_state" />
+                                <field name="quantity_type" />
+                                <field name="default_quantity" />
+                                <field name="force_zero_quantity_non_salable" />
+                                <field name="update_quantities_realtime" />
+                            </group>
+                        </page>
+                        <page string="Prices">
+                            <group>
+                                <field name="pricelist_id" />
+                                <field name="include_taxes_in_price" />
+                                <field name="update_prices_realtime" />
+                            </group>
+                            <group string="Price Without Tax Export">
+                                <field name="export_price_without_tax" />
+                                <field
+                                    name="price_without_tax_attribute_name"
+                                    invisible="not export_price_without_tax"
+                                />
+                            </group>
+                            <group string="Additional Pricelists">
+                                <field
+                                    name="additional_pricelist_ids"
+                                    widget="many2many_tags"
+                                />
+                            </group>
+                        </page>
+                        <page string="Attributes">
+                            <group>
+                                <field name="use_product_id_as_sku" />
+                                <field
+                                    name="custom_sku_field_id"
+                                    options="{'no_create': True}"
+                                />
+                                <field name="export_attribute_set_name" />
+                            </group>
+                            <group string="Additional Attributes">
+                                <field
+                                    name="additional_attribute_field_ids"
+                                    nolabel="1"
+                                >
+                                    <list editable="bottom">
+                                        <field name="sequence" widget="handle" />
+                                        <field
+                                            name="field_id"
+                                            options="{'no_create': True}"
+                                            domain="[('model', '=', 'product.product'),
+                                                    ('ttype', 'in', ['char','text','integer','float','selection','many2one','boolean','html','datetime'])]"
+                                        />
+                                        <field
+                                            name="custom_name"
+                                            placeholder="Leave empty to use field description"
+                                        />
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Images">
+                            <group>
+                                <field name="export_all_images" />
+                                <field
+                                    name="exported_image_count"
+                                    invisible="export_all_images"
+                                />
+                            </group>
+                        </page>
+                        <page string="Categories">
+                            <group>
+                                <field
+                                    name="allowed_categ_ids"
+                                    options="{'no_create': True}"
+                                />
+                            </group>
+                        </page>
+                        <page string="Shipping">
+                            <group>
+                                <field name="notify_shipment" />
+                                <field name="default_delivery_carrier_id" />
+                                <field name="carrier_map_ids">
+                                    <list editable="bottom">
+                                        <field name="carrier_name" />
+                                        <field name="delivery_carrier_id" />
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Orders">
+                            <group>
+                                <field name="import_orders" />
+                                <field name="default_payment_term_id" />
+                                <field name="default_payment_mode_id" />
+                                <field name="default_order_type_id" />
+                                <field name="marketplace_customer_group_ids">
+                                    <list editable="bottom">
+                                        <field name="channel_id" />
+                                        <field name="order_type_id" />
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+    <record id="action_shoppingfeed_store" model="ir.actions.act_window">
+        <field name="name">Shoppingfeed Stores</field>
+        <field name="res_model">shoppingfeed.store</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

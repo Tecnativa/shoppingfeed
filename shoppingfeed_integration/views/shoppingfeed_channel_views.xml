@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_shoppingfeed_channel_tree" model="ir.ui.view">
+        <field name="name">shoppingfeed.channel.tree</field>
+        <field name="model">shoppingfeed.channel</field>
+        <field name="arch" type="xml">
+            <list create="false" delete="false">
+                <field name="name" />
+                <field name="store_id" />
+                <field
+                    name="company_id"
+                    options="{'no_create': True}"
+                    groups="base.group_multi_company"
+                />
+                <field name="upload_invoice_not_allowed" />
+            </list>
+        </field>
+    </record>
+    <record id="view_shoppingfeed_channel_form" model="ir.ui.view">
+        <field name="name">shoppingfeed.channel.form</field>
+        <field name="model">shoppingfeed.channel</field>
+        <field name="arch" type="xml">
+            <form string="Shoppingfeed Channel" create="false" delete="false">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="store_id" readonly="True" />
+                        <field
+                            name="company_id"
+                            options="{'no_create': True}"
+                            groups="base.group_multi_company"
+                        />
+                        <field name="upload_invoice_not_allowed" />
+                        <field name="account_id" options="{'no_create': True}" />
+                        <field
+                            name="payment_method_line_id"
+                            options="{'no_create': True}"
+                        />
+                        <field name="auto_pay" />
+                    </group>
+                    <notebook>
+                        <page string="Shipping">
+                            <group>
+                                <field name="default_delivery_carrier_id" />
+                            </group>
+                            <field name="country_carrier_ids" nolabel="1">
+                                <list editable="bottom">
+                                    <field name="country_id" />
+                                    <field name="delivery_carrier_id" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_shoppingfeed_channel" model="ir.actions.act_window">
+        <field name="name">Channels</field>
+        <field name="res_model">shoppingfeed.channel</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

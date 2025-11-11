@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_product_template_form_inherit_shoppingfeed" model="ir.ui.view">
+        <field name="name">product.template.form.shoppingfeed</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="arch" type="xml">
+            <div name="options" position="inside">
+                <span class="d-inline-flex">
+                    <field name="export_to_shoppingfeed" />
+                    <label for="export_to_shoppingfeed" />
+                </span>
+            </div>
+            <notebook position="inside">
+                <page string="Shoppingfeed" name="shoppingfeed">
+                    <group>
+                        <field
+                            name="shoppingfeed_store_ids"
+                            widget="many2many_tags"
+                            options="{'no_create': True}"
+                            domain="[('id', 'not in', shoppingfeed_store_ids)]"
+                        />
+                        <field
+                            name="sf_forced_category_id"
+                            options="{'no_create': True}"
+                        />
+                        <field name="sf_forced_category_parent_id" readonly="1" />
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

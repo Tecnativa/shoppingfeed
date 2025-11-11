@@ -1,0 +1,1148 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shoppingfeed_integration
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 11:45+0000\n"
+"PO-Revision-Date: 2026-01-22 11:45+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__access_token
+msgid "Access Token"
+msgstr "Token de Acceso"
+
+#. module: shoppingfeed_integration
+#: model:res.groups,comment:shoppingfeed_integration.group_shoppingfeed_user
+msgid "Access to view Shoppingfeed stores, channels, and tickets."
+msgstr "Acceso para ver tiendas, canales y tickets de Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__email
+msgid "Account Email"
+msgstr "Correo Electrónico de la Cuenta"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Account Information"
+msgstr "Información de la Cuenta"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__message_needaction
+msgid "Action Needed"
+msgstr "Acción Necesaria"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__additional_attribute_field_ids
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Additional Attributes"
+msgstr "Atributos Adicionales"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__message_attachment_count
+msgid "Attachment Count"
+msgstr "Cantidad de Adjuntos"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Attributes"
+msgstr "Atributos"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields.selection,name:shoppingfeed_integration.selection__shoppingfeed_ticket__state__canceled
+msgid "Canceled"
+msgstr "Cancelado"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__carrier_map_ids
+msgid "Carrier Mappings"
+msgstr "Asignaciones de Transportistas"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store_carrier_map__carrier_name
+msgid "Carrier name as received from Shoppingfeed"
+msgstr "Nombre del transportista tal como se recibe desde Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__feed_url
+msgid "Catalog Feed URL"
+msgstr "URL del Feed del Catálogo"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Categories"
+msgstr "Categorías"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__allowed_categ_ids
+msgid "Category Selection"
+msgstr "Selección de Categorías"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_log__channel_id
+msgid "Channel"
+msgstr "Canal"
+
+#. module: shoppingfeed_integration
+#: model:ir.actions.act_window,name:shoppingfeed_integration.action_shoppingfeed_channel
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__channel_ids
+#: model:ir.ui.menu,name:shoppingfeed_integration.menu_shoppingfeed_channel
+msgid "Channels"
+msgstr "Canales"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__quantity_type
+msgid ""
+"Choose which stock quantity to export: 'Salable' uses qty_available, "
+"'Virtual' uses virtual_available."
+msgstr ""
+"Elija qué cantidad de stock exportar: 'Vendible' usa qty_available, "
+"'Virtual' usa virtual_available."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__export_type_combo
+msgid "Combos"
+msgstr "Combos"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_channel__company_id
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_log__company_id
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__company_id
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_sale_order__shoppingfeed_raw_data
+msgid "Complete JSON data received from Shoppingfeed API for this order."
+msgstr "Datos JSON completos recibidos de la API de Shoppingfeed para este pedido."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__country_id
+msgid "Country"
+msgstr "País"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_ticket_tree
+msgid "Created On"
+msgstr "Creado el"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_channel__create_uid
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_log__create_uid
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__create_uid
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_attribute_field__create_uid
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_carrier_map__create_uid
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_order_type_map__create_uid
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_channel__create_date
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_log__create_date
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__create_date
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_attribute_field__create_date
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_carrier_map__create_date
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_order_type_map__create_date
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Credentials"
+msgstr "Credenciales"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_sale_order__shoppingfeed_status
+msgid "Current status of the order in Shoppingfeed."
+msgstr "Estado actual del pedido en Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_attribute_field__custom_name
+msgid "Custom Attribute Name"
+msgstr "Nombre de Atributo Personalizado"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__custom_sku_field_id
+msgid "Custom SKU Attribute"
+msgstr "Atributo SKU Personalizado"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_product_attribute__shoppingfeed_code_name_attribute
+msgid "Custom attribute name used when exporting products to Shoppingfeed."
+msgstr "Nombre de atributo personalizado usado al exportar productos a Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store_attribute_field__custom_name
+msgid ""
+"Custom name to use in the exported catalog. If empty, the field description "
+"will be used."
+msgstr "Nombre personalizado para usar en el catálogo exportado. Si está vacío, se usará la descripción del campo."
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_log_list
+msgid "Date"
+msgstr "Fecha"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__default_delivery_carrier_id
+msgid "Default Delivery Carrier"
+msgstr "Transportista de Entrega por Defecto"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__default_order_type_id
+msgid "Default Order Type"
+msgstr "Tipo de Pedido por Defecto"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__default_payment_mode_id
+msgid "Default Payment Mode"
+msgstr "Modo de Pago por Defecto"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__default_payment_term_id
+msgid "Default Payment Terms"
+msgstr "Términos de Pago por Defecto"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__default_quantity
+msgid "Default Quantity"
+msgstr "Cantidad por Defecto"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__default_order_type_id
+msgid ""
+"Default Sale Order Type to assign to imported orders when no other type is "
+"detected or explicitly set from the Shoppingfeed source."
+msgstr ""
+"Tipo de Pedido de Venta por Defecto para asignar a pedidos importados cuando"
+" no se detecta otro tipo o no se establece explícitamente desde "
+"Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__default_delivery_carrier_id
+msgid ""
+"Default carrier to assign to imported orders when the carrier from "
+"Shoppingfeed is not mapped."
+msgstr ""
+"Transportista por defecto para asignar a pedidos importados cuando el "
+"transportista de Shoppingfeed no está mapeado."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__default_payment_mode_id
+msgid "Default payment mode to assign to orders when no other is provided."
+msgstr ""
+"Modo de pago por defecto para asignar a pedidos cuando no se proporciona "
+"otro."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__default_payment_term_id
+msgid "Default payment terms to assign to orders when no other is provided."
+msgstr ""
+"Términos de pago por defecto para asignar a pedidos cuando no se proporciona"
+" otro."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__default_quantity
+msgid ""
+"Default quantity to use for products that do not manage stock or when real "
+"stock is not used."
+msgstr ""
+"Cantidad por defecto para usar en productos que no gestionan stock o cuando "
+"no se usa el stock real."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_channel__display_name
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_log__display_name
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__display_name
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_attribute_field__display_name
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_carrier_map__display_name
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_order_type_map__display_name
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__display_name
+msgid "Display Name"
+msgstr "Nombre para Mostrar"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields.selection,name:shoppingfeed_integration.selection__shoppingfeed_log__log_type__error
+msgid "Error"
+msgstr "Error"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_log__error_message
+msgid "Error Message"
+msgstr "Mensaje de Error"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__export_all_images
+msgid "Export All Images"
+msgstr "Exportar Todas las Imágenes"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__export_attribute_set_name
+msgid "Export Attribute Set Name"
+msgstr "Exportar Nombre del Conjunto de Atributos"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__export_disabled_products
+msgid "Export Disabled Products"
+msgstr "Exportar Productos Deshabilitados"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__export_not_salable_products
+msgid "Export Not Salable Products"
+msgstr "Exportar Productos No Vendibles"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__export_only_selected
+msgid "Export Only Selected"
+msgstr "Exportar Solo los Seleccionados"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__export_out_of_stock
+msgid "Export Out of Stock Products"
+msgstr "Exportar Productos Sin Stock"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Export Product Types"
+msgstr "Exportar Tipos de Productos"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Export Rules"
+msgstr "Reglas de Exportación"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_product_product__export_to_shoppingfeed
+msgid "Export To Shoppingfeed"
+msgstr "Exportar a Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Exportable Products"
+msgstr "Productos Exportables"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__exported_image_count
+msgid "Exported Image Count"
+msgstr "Cantidad de Imágenes Exportadas"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields.selection,name:shoppingfeed_integration.selection__shoppingfeed_ticket__state__failed
+msgid "Failed"
+msgstr "Fallido"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_attribute_field__field_id
+msgid "Field"
+msgstr "Campo"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Socios)"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__force_zero_quantity_non_salable
+msgid "Force Zero Quantity for Non Salable Products"
+msgstr "Forzar Cantidad Cero para Productos No Vendibles"
+
+#. module: shoppingfeed_integration
+#: model:res.groups,comment:shoppingfeed_integration.group_shoppingfeed_manager
+msgid "Full access to configure and manage Shoppingfeed integration."
+msgstr "Acceso completo para configurar y gestionar la integración de Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Sync Account"
+msgstr "Sincronizar Cuenta"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__export_type_goods
+msgid "Goods"
+msgstr "Mercancías"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__has_message
+msgid "Has Message"
+msgstr "Tiene Mensaje"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_channel__id
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_log__id
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__id
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_attribute_field__id
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_carrier_map__id
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_order_type_map__id
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__id
+msgid "ID"
+msgstr "ID"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado, los nuevos mensajes requieren su atención."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__message_has_error
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcado, algunos mensajes tienen un error de entrega."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__export_all_images
+msgid ""
+"If enabled, all images of the product will be exported. If disabled, only "
+"the main image or the number defined in 'Exported Image Count' will be "
+"included in the feed."
+msgstr ""
+"Si está habilitado, se exportarán todas las imágenes del producto. Si está "
+"deshabilitado, solo se incluirá la imagen principal o el número definido en "
+"'Cantidad de Imágenes Exportadas' en el feed."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__export_disabled_products
+msgid ""
+"If enabled, include archived (inactive) products in the Shoppingfeed export."
+msgstr ""
+"Si está habilitado, incluye productos archivados (inactivos) en la "
+"exportación de Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__export_not_salable_products
+msgid ""
+"If enabled, include products not allowed for sale (sale_ok = False) in the "
+"Shoppingfeed export."
+msgstr ""
+"Si está habilitado, incluye productos no permitidos para la venta (sale_ok ="
+" False) en la exportación de Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__export_attribute_set_name
+msgid ""
+"If enabled, include the attribute set name in the exported catalog feed. "
+"Currently has no effect unless a custom attribute set field exists."
+msgstr ""
+"Si está habilitado, incluye el nombre del conjunto de atributos en el feed "
+"del catálogo exportado. Actualmente no tiene efecto a menos que exista un "
+"campo de conjunto de atributos personalizado."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__export_only_selected
+msgid ""
+"If enabled, only products explicitly marked with 'Export To Shoppingfeed' "
+"will be exported in the catalog feed."
+msgstr ""
+"Si está habilitado, solo los productos marcados explícitamente con 'Exportar"
+" a Shoppingfeed' se exportarán en el feed del catálogo."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__import_orders
+msgid "If enabled, orders from Shoppingfeed will be imported automatically."
+msgstr ""
+"Si está habilitado, los pedidos de Shoppingfeed se importarán "
+"automáticamente."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__update_quantities_realtime
+msgid ""
+"If enabled, product quantities will be pushed to Shoppingfeed immediately "
+"when stock changes are detected. This may slow down inventory updates."
+msgstr ""
+"Si está habilitado, las cantidades de productos se enviarán a Shoppingfeed "
+"inmediatamente cuando se detecten cambios de stock. Esto puede ralentizar "
+"las actualizaciones de inventario."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__force_zero_quantity_non_salable
+msgid ""
+"If enabled, products that are not allowed for sale (sale_ok=False) will be "
+"exported with quantity 0."
+msgstr ""
+"Si está habilitado, los productos que no están permitidos para la venta "
+"(sale_ok=False) se exportarán con cantidad 0."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__export_out_of_stock
+msgid ""
+"If enabled, products with no stock (quantity <= 0) will be included in the "
+"Shoppingfeed export."
+msgstr ""
+"Si está habilitado, los productos sin stock (cantidad <= 0) se incluirán en "
+"la exportación de Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__use_actual_stock_state
+msgid ""
+"If enabled, real stock quantities will be used for products that manage "
+"stock. Products without stock management will use the default quantity."
+msgstr ""
+"Si está habilitado, se usarán las cantidades de stock reales para productos "
+"que gestionan stock. Los productos sin gestión de stock usarán la cantidad "
+"por defecto."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__use_product_id_as_sku
+msgid ""
+"If enabled, the internal product ID will be used as the SKU in the feed, "
+"instead of the product's Default Code."
+msgstr ""
+"Si está habilitado, se usará el ID interno del producto como SKU en el feed,"
+" en lugar del Código por Defecto del producto."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_product_product__export_to_shoppingfeed
+msgid ""
+"If enabled, this product will be exported to Shoppingfeed when the store is "
+"configured to export only selected products."
+msgstr ""
+"Si está habilitado, este producto se exportará a Shoppingfeed cuando la "
+"tienda esté configurada para exportar solo productos seleccionados."
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Images"
+msgstr "Imágenes"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__import_orders
+msgid "Import Orders"
+msgstr "Importar Pedidos"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__export_type_combo
+msgid "Include combo products (type = 'combo') in the Shoppingfeed export."
+msgstr ""
+"Incluir productos combo (tipo = 'combo') en la exportación de Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__export_type_goods
+msgid "Include goods products (type = 'consu') in the Shoppingfeed export."
+msgstr ""
+"Incluir productos de mercancías (tipo = 'consu') en la exportación de "
+"Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__export_type_service
+msgid ""
+"Include service products (type = 'service') in the Shoppingfeed export."
+msgstr ""
+"Incluir productos de servicios (tipo = 'service') en la exportación de "
+"Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_stock_picking__shoppingfeed_shipped
+msgid "Indicates if this picking has already been sent to ShoppingFeed"
+msgstr "Indica si este albarán ya ha sido enviado a ShoppingFeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_sale_order__shoppingfeed_channel_id
+msgid "Indicates the channel from which this sales order originated."
+msgstr "Indica el canal del cual se originó este pedido de venta."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_channel__upload_invoice_not_allowed
+msgid ""
+"Indicates whether this channel does NOT support invoice document upload. "
+"Based on Shoppingfeed API documentation — see: https://docs.shopping-"
+"feed.com/#order-operations-supported-per-channel"
+msgstr ""
+"Indica si este canal NO soporta la carga de documentos de factura. Basado en"
+" la documentación de la API de Shoppingfeed — ver: https://docs.shopping-"
+"feed.com/#order-operations-supported-per-channel"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__message_is_follower
+msgid "Is Follower"
+msgstr "Es Seguidor"
+
+#. module: shoppingfeed_integration
+#: model:ir.model,name:shoppingfeed_integration.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento Contable"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__lang_id
+msgid "Language"
+msgstr "Idioma"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_channel__write_uid
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_log__write_uid
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__write_uid
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_attribute_field__write_uid
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_carrier_map__write_uid
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_order_type_map__write_uid
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__write_uid
+msgid "Last Updated by"
+msgstr "Última Actualización por"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_channel__write_date
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_log__write_date
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__write_date
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_attribute_field__write_date
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_carrier_map__write_date
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_order_type_map__write_date
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__write_date
+msgid "Last Updated on"
+msgstr "Última Actualización el"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Leave empty to use field description"
+msgstr "Dejar vacío para usar la descripción del campo"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__link
+msgid "Link"
+msgstr "Enlace"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store_carrier_map__delivery_carrier_id
+msgid "Local Odoo carrier equivalent for this Shoppingfeed carrier."
+msgstr "Transportista local de Odoo equivalente para este transportista de Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_log__log_type
+msgid "Log Type"
+msgstr "Tipo de Log"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.actions.act_window,help:shoppingfeed_integration.action_shoppingfeed_log
+msgid ""
+"Logs are created automatically when the cron job imports orders from "
+"Shoppingfeed."
+msgstr "Los registros se crean automáticamente cuando el trabajo cron importa pedidos desde Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model:ir.module.category,description:shoppingfeed_integration.module_category_shoppingfeed
+msgid "Manage Shoppingfeed integration"
+msgstr "Gestionar integración de Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:res.groups,name:shoppingfeed_integration.group_shoppingfeed_manager
+msgid "Manager"
+msgstr "Administrador"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_order_type_map__channel_id
+msgid "Marketplace Channel"
+msgstr "Canal del Marketplace"
+
+#. module: shoppingfeed_integration
+#: model:ir.model,name:shoppingfeed_integration.model_shoppingfeed_store_order_type_map
+msgid "Marketplace Customer Group Mapping"
+msgstr "Asignación de Grupos de Clientes del Marketplace"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__marketplace_customer_group_ids
+msgid "Marketplace Customer Groups"
+msgstr "Grupos de Clientes del Marketplace"
+
+#. module: shoppingfeed_integration
+#: model:ir.actions.act_window,name:shoppingfeed_integration.action_shoppingfeed_marketplace_orders
+#: model:ir.ui.menu,name:shoppingfeed_integration.menu_shoppingfeed_marketplace_orders
+msgid "Marketplace Orders"
+msgstr "Pedidos del Marketplace"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_ticket_tree
+msgid "Marketplace Ref"
+msgstr "Ref. Marketplace"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_sale_order__shoppingfeed_reference
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_ticket__shoppingfeed_reference
+msgid "Marketplace order reference (e.g., TEST-68fb749e8cd95)."
+msgstr "Referencia del pedido del marketplace (ej., TEST-68fb749e8cd95)."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__message
+msgid "Message"
+msgstr "Mensaje"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de Entrega de Mensaje"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_channel__name
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_log__name
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__name
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.actions.act_window,help:shoppingfeed_integration.action_shoppingfeed_ticket
+msgid "No Shoppingfeed tickets found."
+msgstr "No se encontraron tickets de Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.actions.act_window,help:shoppingfeed_integration.action_shoppingfeed_log
+msgid "No order logs found."
+msgstr "No se encontraron registros de pedidos."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de Acciones"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de Errores"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__exported_image_count
+msgid ""
+"Number of images to export per product when 'Export All Images' is disabled."
+msgstr ""
+"Número de imágenes a exportar por producto cuando 'Exportar Todas las "
+"Imágenes' está deshabilitado."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensajes que requieren acción"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de entrega"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_sale_order__shoppingfeed_order_ref
+msgid "Numeric order ID from Shoppingfeed API (e.g., 21786210256)."
+msgstr ""
+"ID numérico del pedido desde la API de Shoppingfeed (ej., 21786210256)."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_carrier_map__delivery_carrier_id
+msgid "Odoo Delivery Carrier"
+msgstr "Transportista de Entrega Odoo"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__order_id
+msgid "Order"
+msgstr "Pedido"
+
+#. module: shoppingfeed_integration
+#: model:ir.actions.act_window,name:shoppingfeed_integration.action_shoppingfeed_log
+#: model:ir.ui.menu,name:shoppingfeed_integration.menu_shoppingfeed_log
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_log_list
+msgid "Order Logs"
+msgstr "Registros de Pedidos"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_log__shoppingfeed_order_ref
+msgid "Order Reference"
+msgstr "Referencia del Pedido"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_order_type_map__order_type_id
+msgid "Order Type"
+msgstr "Tipo de Pedido"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Orders"
+msgstr "Pedidos"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__password
+msgid "Password"
+msgstr "Contraseña"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__pricelist_id
+msgid "Pricelist for Shoppingfeed Export"
+msgstr "Tarifa para Exportación de Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__pricelist_id
+msgid "Pricelist used to compute prices during Shoppingfeed export."
+msgstr "Tarifa utilizada para calcular precios durante la exportación a Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Prices"
+msgstr "Precios"
+
+#. module: shoppingfeed_integration
+#: model:ir.model,name:shoppingfeed_integration.model_product_attribute
+msgid "Product Attribute"
+msgstr "Atributo de producto"
+
+#. module: shoppingfeed_integration
+#: model:ir.model,name:shoppingfeed_integration.model_product_product
+msgid "Product Variant"
+msgstr "Variante de producto"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__quantity_type
+msgid "Quantity Type"
+msgstr "Tipo de Cantidad"
+
+#. module: shoppingfeed_integration
+#: model:ir.model,name:shoppingfeed_integration.model_stock_quant
+msgid "Quants"
+msgstr "Cuantos"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__rating_ids
+msgid "Ratings"
+msgstr "Valoraciones"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_order_form_shoppingfeed
+msgid "Raw Data"
+msgstr "Datos Sin Procesar"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__result_data
+msgid "Result Data"
+msgstr "Datos del Resultado"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields.selection,name:shoppingfeed_integration.selection__shoppingfeed_ticket__state__running
+msgid "Running"
+msgstr "En Ejecución"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error de Entrega de SMS"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields.selection,name:shoppingfeed_integration.selection__shoppingfeed_store__quantity_type__salable
+msgid "Salable Quantity"
+msgstr "Cantidad Vendible"
+
+#. module: shoppingfeed_integration
+#: model:ir.model,name:shoppingfeed_integration.model_sale_order
+msgid "Sales Order"
+msgstr "Pedidos de Venta"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields.selection,name:shoppingfeed_integration.selection__shoppingfeed_ticket__state__scheduled
+msgid "Scheduled"
+msgstr "Programado"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__custom_sku_field_id
+msgid ""
+"Select field from product.product to be used as the SKU in the export. Leave"
+" empty to use the default behavior (Default Code or Product ID)."
+msgstr ""
+"Seleccione el campo de product.product a usar como SKU en la exportación. "
+"Déjelo vacío para usar el comportamiento por defecto (Código por Defecto o "
+"ID del Producto)."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__additional_attribute_field_ids
+msgid ""
+"Select one or more fields from product.product to include as additional "
+"attributes in the exported Shoppingfeed catalog. You can customize the "
+"attribute name for each field."
+msgstr ""
+"Seleccione uno o más campos de product.product para incluir como atributos "
+"adicionales en el catálogo exportado de Shoppingfeed. Útil para exportar "
+"datos personalizados o metadatos adicionales."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_product_product__shoppingfeed_store_ids
+msgid "Select the Shoppingfeed stores where this product should be exported."
+msgstr ""
+"Seleccione las tiendas de Shoppingfeed donde se debe exportar este producto."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__allowed_categ_ids
+msgid "Select which product categories will be exported to Shoppingfeed."
+msgstr "Seleccione qué categorías de productos se exportarán a Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_attribute_field__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__export_type_service
+msgid "Services"
+msgstr "Servicios"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Shipping"
+msgstr "Envío"
+
+#. module: shoppingfeed_integration
+#: model:ir.module.category,name:shoppingfeed_integration.module_category_shoppingfeed
+#: model:ir.ui.menu,name:shoppingfeed_integration.menu_shoppingfeed_root
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_order_form_shoppingfeed
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_product_form_inherit_shoppingfeed
+msgid "Shoppingfeed"
+msgstr "Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model,name:shoppingfeed_integration.model_shoppingfeed_store_carrier_map
+msgid "Shoppingfeed Carrier Mapping"
+msgstr "Asignación de Transportistas de Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_carrier_map__carrier_name
+msgid "Shoppingfeed Carrier Name"
+msgstr "Nombre del Transportista de Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model,name:shoppingfeed_integration.model_shoppingfeed_channel
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_sale_order__shoppingfeed_channel_id
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_channel_form
+msgid "Shoppingfeed Channel"
+msgstr "Canal de Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_product_attribute__shoppingfeed_code_name_attribute
+msgid "Shoppingfeed Code Name"
+msgstr "Nombre de Código Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_sale_order__shoppingfeed_order_ref
+msgid "Shoppingfeed Order ID"
+msgstr "ID del Pedido de Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model,name:shoppingfeed_integration.model_shoppingfeed_log
+msgid "Shoppingfeed Order Import Log"
+msgstr "Registro de Importación de Pedidos Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_sale_order_filter_shoppingfeed
+msgid "Shoppingfeed Orders"
+msgstr "Pedidos de Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_sale_order__shoppingfeed_raw_data
+msgid "Shoppingfeed Raw Data"
+msgstr "Datos Sin Procesar de Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_sale_order__shoppingfeed_reference
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__shoppingfeed_reference
+msgid "Shoppingfeed Reference"
+msgstr "Referencia de Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_stock_picking__shoppingfeed_shipped
+msgid "Shoppingfeed Shipped"
+msgstr "Enviado a Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_sale_order__shoppingfeed_status
+msgid "Shoppingfeed Status"
+msgstr "Estado de Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_sale_order__shoppingfeed_store_id
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Shoppingfeed Store"
+msgstr "Tienda de Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model,name:shoppingfeed_integration.model_shoppingfeed_store_attribute_field
+msgid "Shoppingfeed Store Additional Attribute Field"
+msgstr "Campo de Atributo Adicional de Tienda Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model,name:shoppingfeed_integration.model_shoppingfeed_store
+msgid "Shoppingfeed Store Configuration"
+msgstr "Configuración de Tienda de Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.actions.act_window,name:shoppingfeed_integration.action_shoppingfeed_store
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_product_product__shoppingfeed_store_ids
+msgid "Shoppingfeed Stores"
+msgstr "Tiendas de Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.model,name:shoppingfeed_integration.model_shoppingfeed_ticket
+msgid "Shoppingfeed Ticket"
+msgstr "Ticket de Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.actions.act_window,name:shoppingfeed_integration.action_shoppingfeed_ticket
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_ticket_tree
+msgid "Shoppingfeed Tickets"
+msgstr "Tickets de Shoppingfeed"
+
+#. module: shoppingfeed_integration
+#: model:ir.actions.server,name:shoppingfeed_integration.ir_cron_shoppingfeed_import_orders_ir_actions_server
+msgid "Shoppingfeed: Import Orders"
+msgstr "Shoppingfeed: Importar Pedidos"
+
+#. module: shoppingfeed_integration
+#: model:ir.actions.server,name:shoppingfeed_integration.ir_cron_fetch_all_shoppingfeed_tickets_ir_actions_server
+msgid "Shoppingfeed: Import Tickets"
+msgstr "Shoppingfeed: Importar Tickets"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_sale_order_filter_shoppingfeed
+msgid "Show only orders imported from Shoppingfeed."
+msgstr "Mostrar solo pedidos importados desde Shoppingfeed."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__state
+msgid "State"
+msgstr "Estado"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Stock"
+msgstr "Stock"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_log__store_id
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_attribute_field__store_id
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_carrier_map__store_id
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store_order_type_map__store_id
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__store_id
+msgid "Store"
+msgstr "Tienda"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__catalog_id
+msgid "Store ID (Catalog)"
+msgstr "ID de Tienda (Catálogo)"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_store_form
+msgid "Store Info"
+msgstr "Información de la Tienda"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__status
+msgid "Store Status"
+msgstr "Estado de la Tienda"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_channel__store_ids
+#: model:ir.ui.menu,name:shoppingfeed_integration.menu_shoppingfeed_store
+msgid "Stores"
+msgstr "Tiendas"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields.selection,name:shoppingfeed_integration.selection__shoppingfeed_ticket__state__succeed
+msgid "Succeeded"
+msgstr "Exitoso"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields.selection,name:shoppingfeed_integration.selection__shoppingfeed_log__log_type__success
+msgid "Success"
+msgstr "Éxito"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_sale_order__shoppingfeed_store_id
+msgid "The Shoppingfeed store from which this order was imported."
+msgstr "La tienda de Shoppingfeed desde la cual se importó este pedido."
+
+#. module: shoppingfeed_integration
+#: model:ir.model.constraint,message:shoppingfeed_integration.constraint_sale_order_unique_shoppingfeed_order_ref_by_company_store
+msgid "This Shoppingfeed order has already been imported!"
+msgstr "¡Este pedido de Shoppingfeed ya ha sido importado!"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_ticket_tree
+msgid "Ticket ID"
+msgstr "ID del Ticket"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_ticket__ticket_type
+msgid "Ticket Type"
+msgstr "Tipo de Ticket"
+
+#. module: shoppingfeed_integration
+#: model_terms:ir.ui.view,arch_db:shoppingfeed_integration.view_shoppingfeed_ticket_tree
+msgid "Ticket URL"
+msgstr "URL del Ticket"
+
+#. module: shoppingfeed_integration
+#: model:ir.ui.menu,name:shoppingfeed_integration.menu_shoppingfeed_ticket
+msgid "Tickets"
+msgstr "Tickets"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__token_type
+msgid "Token Type"
+msgstr "Tipo de Token"
+
+#. module: shoppingfeed_integration
+#: model:ir.model,name:shoppingfeed_integration.model_stock_picking
+msgid "Transfer"
+msgstr "Traslado"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__update_quantities_realtime
+msgid "Update Quantities in Real Time"
+msgstr "Actualizar Cantidades en Tiempo Real"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_channel__upload_invoice_not_allowed
+msgid "Upload Invoice Not Allowed"
+msgstr "Carga de Factura No Permitida"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__use_actual_stock_state
+msgid "Use Actual Stock State"
+msgstr "Usar Estado de Stock Real"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__use_product_id_as_sku
+msgid "Use Product ID for SKU"
+msgstr "Usar ID del Producto para SKU"
+
+#. module: shoppingfeed_integration
+#: model:res.groups,name:shoppingfeed_integration.group_shoppingfeed_user
+msgid "User"
+msgstr "Usuario"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__username
+msgid "Username"
+msgstr "Nombre de Usuario"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields.selection,name:shoppingfeed_integration.selection__shoppingfeed_store__quantity_type__virtual
+msgid "Virtual Quantity"
+msgstr "Cantidad Virtual"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,field_description:shoppingfeed_integration.field_shoppingfeed_store__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del Sitio Web"
+
+#. module: shoppingfeed_integration
+#: model:ir.model.fields,help:shoppingfeed_integration.field_shoppingfeed_store__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicación del sitio web"

@@ -1,0 +1,35 @@
+# Copyright 2025 Juan Carlos Oñate - Tecnativa <juancarlos.onate@tecnativa.com>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+{
+    "name": "Shoppingfeed Integration",
+    "version": "18.0.1.0.2",
+    "summary": "Integrate Odoo with Shoppingfeed for product export and order sync",
+    "category": "Sales",
+    "author": "Tecnativa, Odoo Community Association (OCA)",
+    "maintainers": ["juancarlosonate-tecnativa"],
+    "website": "https://github.com/OCA/shoppingfeed",
+    "license": "AGPL-3",
+    "depends": [
+        "stock",
+        "website_sale",
+        "product_brand",
+        "sale_order_type",
+        "account_payment_sale",
+    ],
+    "data": [
+        "security/shoppingfeed_security.xml",
+        "security/ir.model.access.csv",
+        "security/ir_rule.xml",
+        "views/sale_order_views.xml",
+        "views/shoppingfeed_ticket_views.xml",
+        "views/shoppingfeed_store_views.xml",
+        "views/shoppingfeed_log_views.xml",
+        "views/product_template_views.xml",
+        "views/product_pricelist_views.xml",
+        "views/shoppingfeed_channel_views.xml",
+        "views/product_attribute_views.xml",
+        "views/menus.xml",
+        "data/cron.xml",
+    ],
+    "installable": True,
+}

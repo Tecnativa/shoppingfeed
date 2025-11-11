@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="module_category_shoppingfeed" model="ir.module.category">
+        <field name="name">Shoppingfeed</field>
+        <field name="description">Manage Shoppingfeed integration</field>
+        <field name="sequence">100</field>
+    </record>
+    <record id="group_shoppingfeed_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_shoppingfeed" />
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+        <field
+            name="comment"
+        >Access to view Shoppingfeed stores, channels, and tickets.</field>
+    </record>
+    <record id="group_shoppingfeed_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_shoppingfeed" />
+        <field name="implied_ids" eval="[(4, ref('group_shoppingfeed_user'))]" />
+        <field
+            name="comment"
+        >Full access to configure and manage Shoppingfeed integration.</field>
+    </record>
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_shoppingfeed_manager'))]" />
+    </record>
+</odoo>

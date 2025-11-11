@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<catalog>
+    <products version="1.0.0" extraAttr="test">
+        <product>
+            <!-- Mandatory : Reference of your product. Must be unique across all your catalog. You can use alphanumeric symbol and -_. Avoid using symbols as marketplaces might refuse it -->
+            <reference>AB123</reference>
+            <!-- Recommended :Gtin of your product. This might be a UPC, EAN or any barcode. -->
+            <gtin>123456789></gtin>
+            <!-- Mandatory : Name of your product. -->
+            <name><![CDATA[ My best product ]]></name>
+            <!-- Optional : Link to your product page. -->
+            <link
+            ><![CDATA[http://ps-dev.shopping-feed.com/index.php?id_product=8&amp;controller=product]]></link>
+            <!-- Mandatory : Price of your product. -->
+            <price>10</price>
+            <!-- Mandatory : Quantity available for your product. -->
+            <quantity>1</quantity>
+            <!-- Optional : VAT applicable to your product (percent value) -->
+            <vat>19.0</vat>
+            <!-- Optional : Ecotax applicable to your product -->
+            <ecotax>0.56</ecotax>
+            <!-- Optional : Weight of your product -->
+            <weight>2.5</weight>
+            <!-- Optional : Brand name and link to the brand page of your product. -->
+            <brand>
+                <name><![CDATA[ Fashion Manufacturer ]]></name>
+                <link><![CDATA[http://ps-dev.shopping-feed.com]]></link>
+            </brand>
+            <!-- Optional : Category name and link to the category page of your product. -->
+            <category>
+                <name><![CDATA[ Root > Home > Mugs ]]></name>
+                <link><![CDATA[http://ps-dev.shopping-feed.com]]></link>
+            </category>
+            <!-- Optional : Discounted price of your product. In that case the product will show as $8 instead of $10. We take the first one for now. -->
+            <discounts>
+                <discount>8</discount>
+            </discounts>
+            <!-- Optional : Long and short description of your product. -->
+            <description>
+                <full><![CDATA[ &lt;p&gt;very good mug&lt;/p&gt; ]]></full>
+                <short><![CDATA[ &lt;p&gt;a mug&lt;/p&gt; ]]></short>
+            </description>
+            <!-- Optional : Shipping amount and name of the shipments options availables for your product. We take the first one for now. -->
+            <shippings>
+                <shipping>
+                    <amount>5.90</amount>
+                    <label><![CDATA[ Retrait magasin]]></label>
+                </shipping>
+            </shippings>
+            <!-- Optional : Link to the images of your product. The type is optional and main will be used as primary image. -->
+            <images>
+                <image
+                    type="main"
+                ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                <image
+                    type="additional"
+                ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                <image
+                    type="additional"
+                ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+            </images>
+            <!-- Optional : Attribute set of your product. -->
+            <attributes>
+                <attribute>
+                    <name>Capacity</name>
+                    <value>10</value>
+                </attribute>
+                <attribute>
+                    <name>Material</name>
+                    <value>Iron</value>
+                </attribute>
+            </attributes>
+            <!-- Optional : If your product has different variations, provide variation node. Values provded will override the parent ones. -->
+            <variations>
+                <variation>
+                    <reference>AB123-1</reference>
+                    <gtin>123456789></gtin>
+                    <quantity>1</quantity>
+                    <price>10</price>
+                    <!-- Optional : Weight of your variation -->
+                    <!-- If not given, the parent weight will be copied onto the child -->
+                    <weight>2.5</weight>
+                    <discounts>
+                        <discount
+                            type="price"
+                            start-datetime="2023-07-01T08:00:00"
+                            end-datetime="2023-08-01T00:00:00"
+                        >10</discount>
+                    </discounts>
+                    <shippings>
+                        <shipping>
+                            <amount>5.90</amount>
+                            <label><![CDATA[ Retrait magasin ]]></label>
+                        </shipping>
+                    </shippings>
+                    <images>
+                        <image
+                            type="main"
+                        ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                        <image
+                            type="additional"
+                        ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                        <image
+                            type="additional"
+                        ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                    </images>
+                    <!-- Mandatory : Attribute set of your variation. Each variation must share the same attributes name (color, size...) with different values (Blue, Red, Small, Medium...)  -->
+                    <attributes>
+                        <attribute>
+                            <name>Color</name>
+                            <value>Red</value>
+                        </attribute>
+                        <attribute>
+                            <name>Size</name>
+                            <value>Small</value>
+                        </attribute>
+                    </attributes>
+                </variation>
+                <!-- Another variation -->
+                <variation>
+                    <reference>AB123-1</reference>
+                    <gtin>123456789></gtin>
+                    <quantity>1</quantity>
+                    <price>10</price>
+                    <discounts>
+                        <discount type="price">10</discount>
+                    </discounts>
+                    <shippings>
+                        <shipping>
+                            <amount>5.90</amount>
+                            <label><![CDATA[ Retrait magasin ]]></label>
+                        </shipping>
+                    </shippings>
+                    <images>
+                        <image
+                            type="main"
+                        ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                        <image
+                            type="additional"
+                        ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                        <image
+                            type="additional"
+                        ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                    </images>
+                    <attributes>
+                        <attribute>
+                            <name>Color</name>
+                            <value>Blue</value>
+                        </attribute>
+                        <attribute>
+                            <name>Size</name>
+                            <value>Medium</value>
+                        </attribute>
+                    </attributes>
+                </variation>
+            </variations>
+        </product>
+        <!-- Another product -->
+        <product>
+            <reference>AB123</reference>
+            <gtin>123456789></gtin>
+            <name><![CDATA[ My best product ]]></name>
+            <link
+            ><![CDATA[http://ps-dev.shopping-feed.com/index.php?id_product=8&amp;controller=product]]></link>
+            <price>10</price>
+            <quantity>1</quantity>
+            <brand>
+                <name><![CDATA[ Fashion Manufacturer ]]></name>
+                <link><![CDATA[http://ps-dev.shopping-feed.com]]></link>
+            </brand>
+            <category>
+                <name><![CDATA[ Root > Home > Mugs ]]></name>
+                <link><![CDATA[http://ps-dev.shopping-feed.com]]></link>
+            </category>
+            <discounts>
+                <discount>10</discount>
+            </discounts>
+            <description>
+                <full><![CDATA[ &lt;p&gt;very good mug&lt;/p&gt; ]]></full>
+                <short><![CDATA[ &lt;p&gt;a mug&lt;/p&gt; ]]></short>
+            </description>
+            <shippings>
+                <shipping>
+                    <amount>5.90</amount>
+                    <label><![CDATA[ Retrait magasin]]></label>
+                </shipping>
+            </shippings>
+            <images>
+                <image
+                    type="main"
+                ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                <image
+                    type="additional"
+                ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                <image
+                    type="additional"
+                ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+            </images>
+            <attributes>
+                <attribute>
+                    <name>Color</name>
+                    <value>Red</value>
+                </attribute>
+                <attribute>
+                    <name>Size</name>
+                    <value>XML</value>
+                </attribute>
+                <attribute>
+                    <name>Capacity</name>
+                    <value>10</value>
+                </attribute>
+                <attribute>
+                    <name>Material</name>
+                    <value>Iron</value>
+                </attribute>
+            </attributes>
+            <variations>
+                <variation>
+                    <reference>AB123</reference>
+                    <gtin>123456789></gtin>
+                    <quantity>1</quantity>
+                    <price>10</price>
+                    <discounts>
+                        <discount>10</discount>
+                    </discounts>
+                    <shippings>
+                        <shipping>
+                            <amount>5.90</amount>
+                            <label><![CDATA[ Retrait magasin ]]></label>
+                        </shipping>
+                    </shippings>
+                    <images>
+                        <image
+                            type="main"
+                        ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                        <image
+                            type="additional"
+                        ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                        <image
+                            type="additional"
+                        ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                    </images>
+                    <attributes>
+                        <attribute>
+                            <name>Color</name>
+                            <value>Red</value>
+                        </attribute>
+                        <attribute>
+                            <name>Capacity</name>
+                            <value>10</value>
+                        </attribute>
+                    </attributes>
+                </variation>
+                <variation>
+                    <reference>AB123</reference>
+                    <gtin>123456789></gtin>
+                    <quantity>1</quantity>
+                    <price>10</price>
+                    <discounts>
+                        <discount>10</discount>
+                    </discounts>
+                    <shippings>
+                        <shipping>
+                            <amount>5.90</amount>
+                            <label><![CDATA[ Retrait magasin ]]></label>
+                        </shipping>
+                    </shippings>
+                    <images>
+                        <image
+                            type="main"
+                        ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                        <image
+                            type="additional"
+                        ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                        <image
+                            type="additional"
+                        ><![CDATA[http://ps-dev.shopping-feed.com/img/p/2/6/26-large_default.jpg]]></image>
+                    </images>
+                    <attributes>
+                        <attribute>
+                            <name>Color</name>
+                            <value>Red</value>
+                        </attribute>
+                        <attribute>
+                            <name>Capacity</name>
+                            <value>10</value>
+                        </attribute>
+                    </attributes>
+                </variation>
+            </variations>
+        </product>
+    </products>
+    <metadata>
+        <agent>shopping-feed-php-sdk:1.0.0</agent>
+        <platform>Magento:2.0.1</platform>
+        <startedAt>2018-05-30T09:00:00</startedAt>
+        <finishedAt>2018-05-30T09:20:00</finishedAt>
+        <invalid>1</invalid>
+        <ignored>0</ignored>
+        <written>10</written>
+    </metadata>
+</catalog>
