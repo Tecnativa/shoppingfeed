@@ -59,6 +59,24 @@ class SaleOrder(models.Model):
         ),
     ]
 
+    def _is_shoppingfeed_disable_invoicing(self):
+        return self.shoppingfeed_channel_id.disable_invoicing
+
+    @api.depends("shoppingfeed_channel_id")
+    def _compute_invoice_status(self):
+        res = super()._compute_invoice_status()
+        self.filtered(lambda so: so._is_shoppingfeed_disable_invoicing()).update(
+            {"invoice_status": "no"}
+        )
+        return res
+
+    @api.depends("shoppingfeed_channel_id")
+    def _compute_amount_to_invoice(self):
+        res = super()._compute_amount_to_invoice()
+        for so in self.filtered(lambda so: so._is_shoppingfeed_disable_invoicing()):
+            so.amount_to_invoice = 0
+        return res
+
     def _shoppingfeed_fetch_orders(self, store):
         # Fetch only unacknowledged orders from Shoppingfeed for the given store.
         url = f"https://api.shopping-feed.com/v1/store/{store.catalog_id}/order"
@@ -400,3 +418,15 @@ class SaleOrder(models.Model):
                 error_msg = f"Error creating order: {str(e)}"
                 self._create_shoppingfeed_log(store, order, sf_channel, error_msg)
                 continue
+
+
+class SaleOrderLine(models.Model):
+    _inherit = "sale.order.line"
+
+    @api.depends("order_id.shoppingfeed_channel_id")
+    def _compute_invoice_status(self):
+        res = super()._compute_invoice_status()
+        self.filtered(
+            lambda sol: sol.order_id._is_shoppingfeed_disable_invoicing()
+        ).invoice_status = "no"
+        return res
