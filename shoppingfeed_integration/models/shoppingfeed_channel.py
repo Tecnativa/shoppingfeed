@@ -63,6 +63,14 @@ class ShoppingfeedChannel(models.Model):
         ),
         default=False,
     )
+    disable_invoicing = fields.Boolean(
+        help=(
+            "Mark this field if the channel "
+            "generates the invoice on your platform "
+            "and it is not necessary to invoice the sales order in Odoo."
+        ),
+        default=False,
+    )
     payment_method_line_id = fields.Many2one(
         comodel_name="account.payment.method.line",
         string="Payment Method",
