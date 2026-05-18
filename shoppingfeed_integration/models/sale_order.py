@@ -279,7 +279,7 @@ class SaleOrder(models.Model):
                     carrier = store.default_delivery_carrier_id
         return carrier
 
-    def _shoppingfeed_prepare_order_line(self, item, aliases=None):
+    def _shoppingfeed_prepare_order_line(self, store, item, aliases=None):
         ref = item.get("reference")
         clean_ref = self._shoppingfeed_resolve_product_reference(ref, aliases)
         product = self.env["product.product"].search(
@@ -287,10 +287,13 @@ class SaleOrder(models.Model):
         )
         if not product:
             return False
+        price = item.get("price", product.list_price)
+        if store.include_taxes_in_price:
+            price = price - item.get("taxAmount", 0.0)
         return {
             "product_id": product.id,
             "product_uom_qty": item.get("quantity", 1.0),
-            "price_unit": item.get("price", product.list_price),
+            "price_unit": price,
             "name": item.get("name") or product.display_name,
         }
 
@@ -313,7 +316,7 @@ class SaleOrder(models.Model):
         aliases = order.get("itemsReferencesAliases", {})
         order_lines = []
         for item in order.get("items", []):
-            line_vals = self._shoppingfeed_prepare_order_line(item, aliases)
+            line_vals = self._shoppingfeed_prepare_order_line(store, item, aliases)
             if line_vals:
                 order_lines.append((0, 0, line_vals))
         sale_order = self.create(
