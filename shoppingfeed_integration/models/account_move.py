@@ -6,7 +6,7 @@ import json
 
 import requests
 
-from odoo import models
+from odoo import _, models
 
 
 class AccountMove(models.Model):
@@ -33,7 +33,7 @@ class AccountMove(models.Model):
                 continue
             if store._shoppingfeed_is_demo_mode():
                 continue
-            pdf_content, _ = self.env["ir.actions.report"]._render_qweb_pdf(
+            pdf_content, __ = self.env["ir.actions.report"]._render_qweb_pdf(
                 "account.account_invoices", move.ids
             )
             pdf_file = io.BytesIO(pdf_content)
@@ -52,7 +52,30 @@ class AccountMove(models.Model):
             }
             files = {"files[]": (pdf_file.name, pdf_file, "application/pdf")}
             data = {"body": json.dumps(payload)}
-            requests.post(url, headers=headers, files=files, data=data, timeout=30)
+            response = requests.post(
+                url, headers=headers, files=files, data=data, timeout=30
+            )
+            if response.ok:
+                move.message_post(
+                    body=_(
+                        "Invoice uploaded to Shoppingfeed successfully "
+                        "(order ref: %(ref)s, HTTP %(status)s).",
+                        ref=sale_order.shoppingfeed_order_ref,
+                        status=response.status_code,
+                    ),
+                    subtype_xmlid="mail.mt_note",
+                )
+            else:
+                move.message_post(
+                    body=_(
+                        "Failed to upload invoice to Shoppingfeed "
+                        "(order ref: %(ref)s, HTTP %(status)s): %(detail)s",
+                        ref=sale_order.shoppingfeed_order_ref,
+                        status=response.status_code,
+                        detail=response.text,
+                    ),
+                    subtype_xmlid="mail.mt_note",
+                )
 
     def _shoppingfeed_auto_pay(self):
         for move in self:
