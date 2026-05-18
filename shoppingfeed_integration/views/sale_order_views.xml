@@ -55,6 +55,7 @@
         <field name="inherit_id" ref="sale.view_sales_order_filter" />
         <field name="arch" type="xml">
             <field name="user_id" position="after">
+                <field name="shoppingfeed_reference" string="Pedido de market" />
                 <separator />
                 <filter
                     name="shoppingfeed"
