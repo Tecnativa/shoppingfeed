@@ -105,6 +105,9 @@ class SaleOrder(models.Model):
                 or "Shoppingfeed Customer"
             )
             is_company = False
+        country = self.env["res.country"].search(
+            [("code", "=", billing.get("country"))], limit=1
+        )
         vals = {
             "name": name,
             "is_company": is_company,
@@ -114,9 +117,7 @@ class SaleOrder(models.Model):
             "zip": billing.get("postalCode") or "",
             "city": billing.get("city"),
             "phone": billing.get("phone") or billing.get("mobilePhone"),
-            "country_id": self.env["res.country"]
-            .search([("code", "=", billing.get("country"))], limit=1)
-            .id,
+            "country_id": country.id,
             "company_id": store.company_id.id,
         }
         af = additional_fields or {}
@@ -126,15 +127,29 @@ class SaleOrder(models.Model):
             or af.get("buyer_identification_number")
             or af.get("buyer_identifier_number")
         )
+        vat_valid = False
         if vat:
             vals["vat"] = vat
+            if country:
+                vat_valid = self._shoppingfeed_valid_vat(vat, country, is_company)
         if channel and channel.account_id:
             vals["property_account_receivable_id"] = channel.account_id.id
         if channel and channel.payment_method_line_id:
             vals["property_inbound_payment_method_line_id"] = (
                 channel.payment_method_line_id.id
             )
-        return self.env["res.partner"].create(vals)
+        return (
+            self.env["res.partner"]
+            .with_context(no_vat_validation=not vat_valid)
+            .create(vals)
+        )
+
+    @api.model
+    def _shoppingfeed_valid_vat(self, vat, country, is_company):
+        """Overwrite by other modules to check valid vat methods"""
+        if self.env["res.partner"]._run_vat_test(vat, country, is_company) is False:
+            return False
+        return True
 
     def _shoppingfeed_prepare_shipping(self, shipping, partner, store):
         # Prepare or create delivery address for the Shoppingfeed order.
@@ -166,7 +181,9 @@ class SaleOrder(models.Model):
                 ("zip", "=", shipping_vals["zip"]),
             ],
             limit=1,
-        ) or self.env["res.partner"].create(shipping_vals)
+        ) or self.env["res.partner"].with_context(no_vat_validation=True).create(
+            shipping_vals
+        )
         return shipping_partner
 
     def _shoppingfeed_clean_product_reference(self, reference):
