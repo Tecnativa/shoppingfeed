@@ -310,6 +310,14 @@ class ShoppingfeedStore(models.Model):
             "affecting production data in ShoppingFeed."
         ),
     )
+    filter_order_acknowledgment = fields.Selection(
+        [
+            ("acknowledged", "Acknowledged"),
+            ("unacknowledged", "Unacknowledged"),
+        ],
+        default="unacknowledged",
+        string="Filter Acknowledgment",
+    )
 
     @api.depends("catalog_id", "website_id")
     def _compute_feed_url(self):

@@ -84,7 +84,10 @@ class SaleOrder(models.Model):
             "Authorization": store.access_token,
             "Content-Type": "application/json",
         }
-        params = {"acknowledgment": "unacknowledged", "status": "waiting_shipment"}
+        params = {
+            "acknowledgment": store.filter_order_acknowledgment,
+            "status": "waiting_shipment",
+        }
         response = requests.get(url, headers=headers, params=params, timeout=30)
         return response.json().get("_embedded", {}).get("order", [])
 

@@ -220,6 +220,7 @@
                                 <field name="default_payment_term_id" />
                                 <field name="default_payment_mode_id" />
                                 <field name="default_order_type_id" />
+                                <field name="filter_order_acknowledgment" />
                                 <field name="marketplace_customer_group_ids">
                                     <list editable="bottom">
                                         <field name="channel_id" />
