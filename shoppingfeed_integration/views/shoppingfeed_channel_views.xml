@@ -38,6 +38,7 @@
                             options="{'no_create': True}"
                         />
                         <field name="auto_pay" />
+                        <field name="auto_confirm_sale" />
                     </group>
                     <notebook>
                         <page string="Shipping">

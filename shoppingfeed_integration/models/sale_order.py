@@ -421,7 +421,7 @@ class SaleOrder(models.Model):
                     carrier = self._shoppingfeed_get_carrier(
                         store, sf_channel, carrier_name, shipping_country
                     )
-                    self._shoppingfeed_create_sale_order(
+                    new_sale = self._shoppingfeed_create_sale_order(
                         store,
                         order,
                         partner,
@@ -430,6 +430,8 @@ class SaleOrder(models.Model):
                         order_type_id,
                         carrier,
                     )
+                    if sf_channel.auto_confirm_sale:
+                        new_sale.action_confirm()
                     self._shoppingfeed_acknowledge_order(store, order)
             except Exception as e:
                 error_msg = f"Error creating order: {str(e)}"

@@ -93,6 +93,13 @@ class ShoppingfeedChannel(models.Model):
             "upon confirmation using the configured payment method."
         ),
     )
+    auto_confirm_sale = fields.Boolean(
+        string="Automatic Sale Confirmation",
+        default=True,
+        help=(
+            "When enabled, sales orders from this channel are automatically confirmed."
+        ),
+    )
     account_id = fields.Many2one(
         comodel_name="account.account",
         string="Receivable Account",
