@@ -279,6 +279,16 @@ class SaleOrder(models.Model):
                     carrier = store.default_delivery_carrier_id
         return carrier
 
+    def _shoppingfeed_get_tax_data(self, sale_order, line_vals):
+        new_sol = self.env["sale.order.line"].new({**line_vals, "order_id": sale_order})
+        tax_data = new_sol.tax_id.with_context(force_price_include=True).compute_all(
+            line_vals["price_unit"],
+            currency=sale_order.currency_id,
+            quantity=1.0,
+            partner=sale_order.partner_shipping_id,
+        )
+        return tax_data
+
     def _shoppingfeed_prepare_order_line(self, store, item, new_order, aliases=None):
         ref = item.get("reference")
         clean_ref = self._shoppingfeed_resolve_product_reference(ref, aliases)
@@ -294,15 +304,10 @@ class SaleOrder(models.Model):
             "price_unit": price,
             "name": item.get("name") or product.display_name,
         }
-        if not store.include_taxes_in_price:
-            return vals
-        new_sol = self.env["sale.order.line"].new({**vals, "order_id": new_order})
-        tax_data = new_sol.tax_id.with_context(force_price_include=True).compute_all(
-            item.get("price"),
-            currency=new_order.currency_id,
-            quantity=1.0,
-            partner=new_order.partner_shipping_id,
-        )
+        # TODO: Add condition to remove taxes depends on store or channel field
+        # if not store.include_taxes_in_price:
+        #     return vals
+        tax_data = self._shoppingfeed_get_tax_data(new_order, vals)
         vals["price_unit"] = tax_data["total_excluded"]
         return vals
 
@@ -353,8 +358,15 @@ class SaleOrder(models.Model):
         sale_order = self.create(so_vals)
         if carrier:
             payment = order.get("payment", {}) or {}
-            shipping_cost = payment.get("shippingAmount", 0.0)
-            sale_order.set_delivery_line(carrier, shipping_cost)
+            # TODO: Add condition to remove taxes depends on store or channel field
+            tax_data = self._shoppingfeed_get_tax_data(
+                new_so,
+                {
+                    "product_id": carrier.product_id.id,
+                    "price_unit": payment.get("shippingAmount", 0.0),
+                },
+            )
+            sale_order.set_delivery_line(carrier, tax_data["total_excluded"])
         link = (
             f"https://app.shopping-feed.com/v3/es/orders/detail/"
             f"{order.get('id')}?store={order.get('storeId')}"
