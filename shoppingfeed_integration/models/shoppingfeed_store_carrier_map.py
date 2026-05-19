@@ -17,7 +17,7 @@ class ShoppingfeedStoreCarrierMap(models.Model):
         required=True,
         help="Carrier name as received from Shoppingfeed",
     )
-    delivery_carrier_id = fields.Many2one(
+    delivery_carrier_ids = fields.Many2many(
         comodel_name="delivery.carrier",
         string="Odoo Delivery Carrier",
         required=True,

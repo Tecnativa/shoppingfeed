@@ -255,20 +255,25 @@ class SaleOrder(models.Model):
         return missing_products
 
     def _shoppingfeed_get_carrier(
-        self, store, channel, carrier_name, shipping_country=None
+        self, store, channel, carrier_name, partner, shipping_partner=None
     ):
         carrier = False
+        shipping_partner = shipping_partner or partner
+        shipping_country = shipping_partner.country_id if shipping_partner else None
         if carrier_name:
             carrier_map = store.carrier_map_ids.filtered(
                 lambda m, carrier_name=carrier_name: m.carrier_name.strip().lower()
                 == carrier_name.strip().lower()
             )
             if carrier_map:
-                carrier = carrier_map.delivery_carrier_id
+                for candidate_carrier in carrier_map.delivery_carrier_ids:
+                    if candidate_carrier._match_address(shipping_partner):
+                        carrier = candidate_carrier
+                        break
         if not carrier:
             if channel and shipping_country and channel.country_carrier_ids:
                 country_rule = channel.country_carrier_ids.filtered(
-                    lambda r, c=shipping_country: r.country_id == c
+                    lambda rule, country=shipping_country: rule.country_id == country
                 )
                 if country_rule:
                     carrier = country_rule[0].delivery_carrier_id
@@ -442,11 +447,8 @@ class SaleOrder(models.Model):
                     # Carrier mapping
                     shipment = order.get("shipment", {}) or {}
                     carrier_name = shipment.get("carrier")
-                    shipping_country = (
-                        shipping_partner.country_id if shipping_partner else None
-                    )
                     carrier = self._shoppingfeed_get_carrier(
-                        store, sf_channel, carrier_name, shipping_country
+                        store, sf_channel, carrier_name, partner, shipping_partner
                     )
                     new_sale = self._shoppingfeed_create_sale_order(
                         store,

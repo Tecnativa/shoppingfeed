@@ -209,7 +209,11 @@
                                 <field name="carrier_map_ids">
                                     <list editable="bottom">
                                         <field name="carrier_name" />
-                                        <field name="delivery_carrier_id" />
+                                        <field
+                                            name="delivery_carrier_ids"
+                                            widget="many2many_tags"
+                                            options="{'no_create': True}"
+                                        />
                                     </list>
                                 </field>
                             </group>
