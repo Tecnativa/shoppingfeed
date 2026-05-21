@@ -91,6 +91,13 @@ class SaleOrder(models.Model):
         response = requests.get(url, headers=headers, params=params, timeout=30)
         return response.json().get("_embedded", {}).get("order", [])
 
+    @api.model
+    def _shoppingfeed_format_phone(self, phone_number, country):
+        phone_sanitized = self._phone_format(
+            number=phone_number, country=country, force_format="INTERNATIONAL"
+        )
+        return phone_sanitized or phone_number
+
     def _shoppingfeed_prepare_partner(
         self, billing, store, channel=None, additional_fields=None
     ):
@@ -111,6 +118,8 @@ class SaleOrder(models.Model):
         country = self.env["res.country"].search(
             [("code", "=", billing.get("country"))], limit=1
         )
+        phone = billing.get("phone") or billing.get("mobilePhone")
+        phone = self._shoppingfeed_format_phone(phone, country)
         vals = {
             "name": name,
             "is_company": is_company,
@@ -119,7 +128,7 @@ class SaleOrder(models.Model):
             "street2": billing.get("street2"),
             "zip": billing.get("postalCode") or "",
             "city": billing.get("city"),
-            "phone": billing.get("phone") or billing.get("mobilePhone"),
+            "phone": phone,
             "country_id": country.id,
             "company_id": store.company_id.id,
         }
@@ -158,6 +167,11 @@ class SaleOrder(models.Model):
         # Prepare or create delivery address for the Shoppingfeed order.
         if not shipping:
             return None
+        country = self.env["res.country"].search(
+            [("code", "=", shipping.get("country"))], limit=1
+        )
+        phone = shipping.get("phone") or shipping.get("mobilePhone")
+        phone = self._shoppingfeed_format_phone(phone, country)
         shipping_vals = {
             "parent_id": partner.id,
             "type": "delivery",
@@ -169,11 +183,9 @@ class SaleOrder(models.Model):
             "street2": shipping.get("street2"),
             "zip": shipping.get("postalCode") or "",
             "city": shipping.get("city"),
-            "phone": shipping.get("phone") or shipping.get("mobilePhone"),
+            "phone": phone,
             "email": shipping.get("email"),
-            "country_id": self.env["res.country"]
-            .search([("code", "=", shipping.get("country"))], limit=1)
-            .id,
+            "country_id": country.id,
             "company_id": store.company_id.id,
         }
         shipping_partner = self.env["res.partner"].search(
