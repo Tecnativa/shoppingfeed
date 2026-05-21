@@ -1,12 +1,14 @@
 # Copyright 2025 Juan Carlos Oñate - Tecnativa <juancarlos.onate@tecnativa.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-
 import io
 import json
+import logging
 
 import requests
 
 from odoo import _, models
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountMove(models.Model):
@@ -100,8 +102,9 @@ class AccountMove(models.Model):
                 active_ids=move.ids,
             ).create({})._create_payments()
 
-    def action_post(self):
-        res = super().action_post()
-        self._shoppingfeed_upload_invoice()
-        self._shoppingfeed_auto_pay()
-        return res
+    def _post(self, soft=True):
+        posted = super()._post(soft)
+        invoices = posted.filtered(lambda move: move.is_invoice())
+        invoices._shoppingfeed_upload_invoice()
+        invoices._shoppingfeed_auto_pay()
+        return posted
