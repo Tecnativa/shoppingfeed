@@ -93,8 +93,8 @@ class SaleOrder(models.Model):
 
     @api.model
     def _shoppingfeed_format_phone(self, phone_number, country):
-        if not self:
-            return phone_number
+        if not phone_number:
+            return ""
         phone_sanitized = self._phone_format(
             number=phone_number, country=country, force_format="INTERNATIONAL"
         )
