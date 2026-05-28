@@ -318,6 +318,7 @@ class ShoppingfeedStore(models.Model):
         default="unacknowledged",
         string="Filter Acknowledgment",
     )
+    date_download_since = fields.Datetime()
 
     @api.depends("catalog_id", "website_id")
     def _compute_feed_url(self):

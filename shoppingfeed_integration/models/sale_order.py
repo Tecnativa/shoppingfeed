@@ -88,6 +88,8 @@ class SaleOrder(models.Model):
             "acknowledgment": store.filter_order_acknowledgment,
             "status": "waiting_shipment",
         }
+        if store.date_download_since:
+            params["since"] = store.date_download_since.isoformat(timespec="seconds")
         response = requests.get(url, headers=headers, params=params, timeout=30)
         return response.json().get("_embedded", {}).get("order", [])
 
