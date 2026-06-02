@@ -133,7 +133,7 @@ class CatalogController(http.Controller):
                 )
                 yield etree.tostring(product_el, encoding="UTF-8")
                 yield b"\n"
-            request.env.cache.invalidate()
+            request.env.invalidate_all()
         yield b"</products>\n"
         metadata_el = self._build_metadata_xml(total_products, generation_started_at)
         yield etree.tostring(metadata_el, encoding="UTF-8")
