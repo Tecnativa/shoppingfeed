@@ -78,7 +78,7 @@ class SaleOrder(models.Model):
         return res
 
     def _shoppingfeed_fetch_orders(self, store):
-        # Fetch only unacknowledged orders from Shoppingfeed for the given store.
+        # Fetch orders from Shoppingfeed for the given store.
         url = f"https://api.shopping-feed.com/v1/store/{store.catalog_id}/order"
         headers = {
             "Authorization": store.access_token,
@@ -86,8 +86,9 @@ class SaleOrder(models.Model):
         }
         params = {
             "acknowledgment": store.filter_order_acknowledgment,
-            "status": "waiting_shipment",
         }
+        if store.filter_order_status:
+            params["status"] = store.filter_order_status
         if store.date_download_since:
             params["since"] = store.date_download_since.isoformat(timespec="seconds")
         response = requests.get(url, headers=headers, params=params, timeout=30)

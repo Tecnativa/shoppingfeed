@@ -318,6 +318,25 @@ class ShoppingfeedStore(models.Model):
         default="unacknowledged",
         string="Filter Acknowledgment",
     )
+    filter_order_status = fields.Selection(
+        [
+            ("created", "Created"),
+            ("waiting_store_acceptance", "Waiting Store Acceptance"),
+            ("refused", "Refused"),
+            ("waiting_shipment", "Waiting Shipment"),
+            ("shipped", "Shipped"),
+            ("cancelled", "Cancelled"),
+            ("refunded", "Refunded"),
+            ("partially_refunded", "Partially Refunded"),
+            ("partially_shipped", "Partially Shipped"),
+        ],
+        default="waiting_shipment",
+        string="Filter Status",
+        help=(
+            "Only orders in this Shoppingfeed status will be imported. "
+            "Leave empty to import orders regardless of their status."
+        ),
+    )
     date_download_since = fields.Datetime()
 
     @api.depends("catalog_id", "website_id")
