@@ -86,6 +86,7 @@ class SaleOrder(models.Model):
         }
         params = {
             "acknowledgment": store.filter_order_acknowledgment,
+            "limit": 200,
         }
         if store.filter_order_status:
             params["status"] = store.filter_order_status
