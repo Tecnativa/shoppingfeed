@@ -357,6 +357,7 @@ class SaleOrder(models.Model):
             "partner_shipping_id": shipping_partner.id
             if shipping_partner
             else partner.id,
+            "client_order_ref": order.get("reference"),
             "shoppingfeed_reference": order.get("reference"),
             "currency_id": currency.id,
             "shoppingfeed_order_ref": ext_id,

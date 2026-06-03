@@ -189,6 +189,7 @@ class TestShoppingfeedIntegration(AccountTestInvoicingCommon):
                 {
                     "shoppingfeed_order_ref": "SF-999001",
                     "shoppingfeed_reference": "MKT-TEST-REF-001",
+                    "client_order_ref": "MKT-TEST-REF-001",
                     "shoppingfeed_channel_id": self.sf_channel.id,
                     "shoppingfeed_store_id": self.sf_store.id,
                     "partner_id": self.partner_a.id,
