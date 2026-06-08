@@ -202,9 +202,7 @@ class SaleOrder(models.Model):
                 ("zip", "=", shipping_vals["zip"]),
             ],
             limit=1,
-        ) or self.env["res.partner"].with_context(no_vat_validation=True).create(
-            shipping_vals
-        )
+        ) or self.env["res.partner"].create(shipping_vals)
         return shipping_partner
 
     def _shoppingfeed_clean_product_reference(self, reference):
