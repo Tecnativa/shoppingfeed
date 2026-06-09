@@ -150,6 +150,9 @@ class SaleOrder(models.Model):
             vals["vat"] = vat
             if country:
                 vat_valid = self._shoppingfeed_valid_vat(vat, country, is_company)
+                if vat_valid:
+                    if len(vat) > 1 and not vat[1].isalpha():
+                        vals["vat"] = f"{country.code}{vat}"
         if channel and channel.account_id:
             vals["property_account_receivable_id"] = channel.account_id.id
         if channel and channel.payment_method_line_id:
@@ -180,6 +183,7 @@ class SaleOrder(models.Model):
         phone = self._shoppingfeed_format_phone(phone, country)
         shipping_vals = {
             "parent_id": partner.id,
+            "vat": partner.vat,
             "type": "delivery",
             "name": (
                 f"{shipping.get('firstName', '')} " f"{shipping.get('lastName', '')}"
