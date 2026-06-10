@@ -79,6 +79,45 @@ class TestShoppingfeedIntegration(AccountTestInvoicingCommon):
             ],
         )
 
+    def test_billing_partner_dedup_by_vat(self):
+        SO = self.env["sale.order"]
+        billing = {
+            "company": "Amazon Business EU SARL",
+            "email": "ab@example.com",
+            "street": "38 avenue John F. Kennedy",
+            "postalCode": "L-1855",
+            "city": "Luxembourg",
+            "country": "LU",
+        }
+        af_de = {"buyer_tax_registration_id": "DE319514546"}
+        p1 = SO._shoppingfeed_prepare_partner(
+            billing, self.sf_store, channel=self.sf_channel, additional_fields=af_de
+        )
+        p2 = SO._shoppingfeed_prepare_partner(
+            billing, self.sf_store, channel=self.sf_channel, additional_fields=af_de
+        )
+        self.assertEqual(p1, p2)
+        p3 = SO._shoppingfeed_prepare_partner(
+            billing,
+            self.sf_store,
+            channel=self.sf_channel,
+            additional_fields={"buyer_tax_registration_id": "IT13397910962"},
+        )
+        self.assertNotEqual(p1, p3)
+        b2c = {
+            "firstName": "John",
+            "lastName": "Doe",
+            "email": "jd@example.com",
+            "country": "ES",
+        }
+        c1 = SO._shoppingfeed_prepare_partner(
+            b2c, self.sf_store, channel=self.sf_channel
+        )
+        c2 = SO._shoppingfeed_prepare_partner(
+            b2c, self.sf_store, channel=self.sf_channel
+        )
+        self.assertNotEqual(c1, c2)
+
     def test_invoice_auto_paid_on_post(self):
         """Invoice from a SF order with auto_pay=True is paid on confirmation."""
         self.partner_a.property_inbound_payment_method_line_id = (

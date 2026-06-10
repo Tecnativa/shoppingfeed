@@ -107,7 +107,6 @@ class SaleOrder(models.Model):
     def _shoppingfeed_prepare_partner(
         self, billing, store, channel=None, additional_fields=None
     ):
-        # Always create a new billing partner from Shoppingfeed data.
         company = billing.get("company") or ""
         if company:
             name = company
@@ -121,6 +120,25 @@ class SaleOrder(models.Model):
                 or "Shoppingfeed Customer"
             )
             is_company = False
+        af = additional_fields or {}
+        vat = (
+            af.get("buyer_tax_registration_id")
+            or af.get("mms-customer-tax-id")
+            or af.get("buyer_identification_number")
+            or af.get("buyer_identifier_number")
+        )
+        # Reuse an existing partner with the same VAT instead of duplicating it.
+        if vat:
+            existing = self.env["res.partner"].search(
+                [
+                    ("vat", "=", vat),
+                    ("parent_id", "=", False),
+                    ("company_id", "in", [store.company_id.id, False]),
+                ],
+                limit=1,
+            )
+            if existing:
+                return existing
         country = self.env["res.country"].search(
             [("code", "=", billing.get("country"))], limit=1
         )
@@ -138,13 +156,6 @@ class SaleOrder(models.Model):
             "country_id": country.id,
             "company_id": store.company_id.id,
         }
-        af = additional_fields or {}
-        vat = (
-            af.get("buyer_tax_registration_id")
-            or af.get("mms-customer-tax-id")
-            or af.get("buyer_identification_number")
-            or af.get("buyer_identifier_number")
-        )
         vat_valid = False
         if vat:
             vals["vat"] = vat
@@ -202,6 +213,7 @@ class SaleOrder(models.Model):
             [
                 ("parent_id", "=", partner.id),
                 ("type", "=", "delivery"),
+                ("name", "=", shipping_vals["name"]),
                 ("street", "=", shipping_vals["street"]),
                 ("zip", "=", shipping_vals["zip"]),
             ],
