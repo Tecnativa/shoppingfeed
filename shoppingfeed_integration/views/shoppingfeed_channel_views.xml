@@ -37,6 +37,7 @@
                             name="payment_method_line_id"
                             options="{'no_create': True}"
                         />
+                        <field name="fiscal_position_id" />
                         <field name="auto_pay" />
                         <field name="auto_confirm_sale" />
                     </group>

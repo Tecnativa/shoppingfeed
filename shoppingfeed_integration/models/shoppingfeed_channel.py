@@ -109,3 +109,11 @@ class ShoppingfeedChannel(models.Model):
             " channel."
         ),
     )
+    fiscal_position_id = fields.Many2one(
+        "account.fiscal.position",
+        string="Fiscal Position",
+        check_company=True,
+        ondelete="restrict",
+        help="Fiscal positions are used to adapt taxes and accounts for particular "
+        "customers or sales orders. The default value comes from the customer.",
+    )
