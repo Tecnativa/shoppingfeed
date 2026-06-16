@@ -384,8 +384,6 @@ class SaleOrder(models.Model):
             "company_id": store.company_id.id,
             "shoppingfeed_raw_data": json.dumps(order, indent=2, ensure_ascii=False),
         }
-        if sf_channel.fiscal_position_id:
-            so_vals["fiscal_position_id"] = sf_channel.fiscal_position_id.id
         new_so = self.new(so_vals)
         order_lines = []
         for item in order.get("items", []):
