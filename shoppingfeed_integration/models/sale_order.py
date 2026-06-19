@@ -192,9 +192,10 @@ class SaleOrder(models.Model):
         )
         phone = shipping.get("phone") or shipping.get("mobilePhone")
         phone = self._shoppingfeed_format_phone(phone, country)
+        vat = partner.vat
         shipping_vals = {
             "parent_id": partner.id,
-            "vat": partner.vat,
+            "vat": vat,
             "type": "delivery",
             "name": (
                 f"{shipping.get('firstName', '')} " f"{shipping.get('lastName', '')}"
@@ -209,6 +210,13 @@ class SaleOrder(models.Model):
             "country_id": country.id,
             "company_id": store.company_id.id,
         }
+        vat_valid = False
+        if vat and country:
+            vat_valid = self._shoppingfeed_valid_vat(vat, country, False)
+            if vat_valid:
+                if len(vat) > 1 and not vat[1].isalpha():
+                    shipping_vals["vat"] = f"{country.code}{vat}"
+
         shipping_partner = self.env["res.partner"].search(
             [
                 ("parent_id", "=", partner.id),
@@ -218,7 +226,9 @@ class SaleOrder(models.Model):
                 ("zip", "=", shipping_vals["zip"]),
             ],
             limit=1,
-        ) or self.env["res.partner"].create(shipping_vals)
+        ) or self.env["res.partner"].with_context(
+            no_vat_validation=not vat_valid
+        ).create(shipping_vals)
         return shipping_partner
 
     def _shoppingfeed_clean_product_reference(self, reference):
