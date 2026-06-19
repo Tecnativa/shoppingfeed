@@ -81,7 +81,10 @@ class AccountMove(models.Model):
 
     def _shoppingfeed_auto_pay(self):
         for move in self:
-            if move.move_type != "out_invoice" or move.payment_state == "paid":
+            if (
+                move.move_type not in ("out_invoice", "out_refund")
+                or move.payment_state == "paid"
+            ):
                 continue
             sale_orders = move.line_ids.sale_line_ids.order_id.filtered(
                 lambda so, move=move: so.company_id == move.company_id
@@ -90,13 +93,23 @@ class AccountMove(models.Model):
             channel = sale_order.shoppingfeed_channel_id
             if not sale_order or not channel or not channel.auto_pay:
                 continue
-            if (
-                not move.preferred_payment_method_line_id
-                and channel.payment_method_line_id
-            ):
-                move.preferred_payment_method_line_id = channel.payment_method_line_id
-            if not move.preferred_payment_method_line_id:
-                continue
+            if move.move_type == "out_refund":
+                # Force the outbound mirror line: the computed preferred for a
+                # sale document is the partner inbound line, invalid here.
+                method_line = channel._shoppingfeed_get_refund_payment_method_line()
+                if not method_line:
+                    continue
+                move.preferred_payment_method_line_id = method_line
+            else:
+                if (
+                    not move.preferred_payment_method_line_id
+                    and channel.payment_method_line_id
+                ):
+                    move.preferred_payment_method_line_id = (
+                        channel.payment_method_line_id
+                    )
+                if not move.preferred_payment_method_line_id:
+                    continue
             self.env["account.payment.register"].with_context(
                 active_model="account.move",
                 active_ids=move.ids,

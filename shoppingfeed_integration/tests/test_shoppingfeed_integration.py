@@ -13,6 +13,9 @@ class TestShoppingfeedIntegration(AccountTestInvoicingCommon):
     def setUpClass(cls):
         super().setUpClass()
         cls.bank_journal = cls.company_data["default_journal_bank"]
+        cls.market_account = cls.company_data["default_account_receivable"].copy(
+            {"name": "SF Market Clearing"}
+        )
         cls.inbound_payment_method_line = cls.env["account.payment.method.line"].create(
             {
                 "name": "SF Inbound Payment Method",
@@ -21,6 +24,21 @@ class TestShoppingfeedIntegration(AccountTestInvoicingCommon):
                 ].id,
                 "payment_type": "inbound",
                 "journal_id": cls.bank_journal.id,
+                "payment_account_id": cls.market_account.id,
+            }
+        )
+        cls.outbound_manual_method = cls.env["account.payment.method"].search(
+            [("code", "=", "manual"), ("payment_type", "=", "outbound")], limit=1
+        )
+        cls.outbound_payment_method_line = cls.env[
+            "account.payment.method.line"
+        ].create(
+            {
+                "name": "SF Outbound Payment Method",
+                "payment_method_id": cls.outbound_manual_method.id,
+                "payment_type": "outbound",
+                "journal_id": cls.bank_journal.id,
+                "payment_account_id": cls.market_account.id,
             }
         )
         cls.sf_store = cls.env["shoppingfeed.store"].create(
@@ -49,6 +67,26 @@ class TestShoppingfeedIntegration(AccountTestInvoicingCommon):
                 "product_id": product.id,
                 "product_uom_qty": 1.0,
                 "price_unit": product.list_price,
+            }
+        )
+
+    def _sf_refund(self, sale_order, product=None):
+        product = product or self.product_a
+        return self.env["account.move"].create(
+            {
+                "move_type": "out_refund",
+                "partner_id": sale_order.partner_id.id,
+                "invoice_origin": sale_order.name,
+                "invoice_line_ids": [
+                    Command.create(
+                        {
+                            "product_id": product.id,
+                            "quantity": 1.0,
+                            "price_unit": product.list_price,
+                            "sale_line_ids": [Command.set(sale_order.order_line.ids)],
+                        }
+                    )
+                ],
             }
         )
 
@@ -157,6 +195,38 @@ class TestShoppingfeedIntegration(AccountTestInvoicingCommon):
         invoice.action_post()
         self.assertNotEqual(invoice.payment_state, "paid")
         self.sf_channel.auto_pay = True
+
+    def test_refund_auto_paid_on_channel_account(self):
+        self.partner_a.property_inbound_payment_method_line_id = (
+            self.inbound_payment_method_line
+        )
+        sale_order = self.env["sale.order"].create(
+            {
+                "partner_id": self.partner_a.id,
+                "shoppingfeed_order_ref": "SF-TEST-REFUND-001",
+                "shoppingfeed_store_id": self.sf_store.id,
+                "shoppingfeed_channel_id": self.sf_channel.id,
+                "order_line": [self._sf_order_line()],
+            }
+        )
+        sale_order.action_confirm()
+        self.sf_channel.auto_pay = False
+        unpaid = self._sf_refund(sale_order)
+        unpaid.action_post()
+        self.assertNotEqual(unpaid.payment_state, "paid")
+        self.sf_channel.auto_pay = True
+        refund = self._sf_refund(sale_order)
+        refund.action_post()
+        self.assertEqual(refund.payment_state, "paid")
+        payment = refund.reconciled_payment_ids
+        self.assertEqual(len(payment), 1)
+        self.assertEqual(payment.payment_type, "outbound")
+        self.assertEqual(
+            payment.payment_method_line_id, self.outbound_payment_method_line
+        )
+        self.assertEqual(
+            payment.payment_method_line_id.payment_account_id, self.market_account
+        )
 
     def test_product_reference_cleaning(self):
         """_shoppingfeed_clean_product_reference strips 2-char country suffixes only."""

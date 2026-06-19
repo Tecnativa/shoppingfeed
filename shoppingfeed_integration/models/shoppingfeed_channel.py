@@ -109,3 +109,17 @@ class ShoppingfeedChannel(models.Model):
             " channel."
         ),
     )
+
+    def _shoppingfeed_get_refund_payment_method_line(self):
+        self.ensure_one()
+        inbound = self.payment_method_line_id
+        if not inbound or not inbound.payment_account_id:
+            return self.env["account.payment.method.line"]
+        return self.env["account.payment.method.line"].search(
+            [
+                ("journal_id", "=", inbound.journal_id.id),
+                ("payment_type", "=", "outbound"),
+                ("payment_account_id", "=", inbound.payment_account_id.id),
+            ],
+            limit=1,
+        )
