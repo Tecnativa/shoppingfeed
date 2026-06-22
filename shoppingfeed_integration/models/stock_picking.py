@@ -22,13 +22,17 @@ class StockPicking(models.Model):
         self._shoppingfeed_notify_shipment()
         return res
 
+    def _shoppingfeed_tracking_number(self):
+        self.ensure_one()
+        return self.carrier_tracking_ref or ""
+
     def _shoppingfeed_ship_order_payload(self, sale_order):
         self.ensure_one()
         return {
             "id": int(sale_order.shoppingfeed_order_ref),
             "carrier": self.carrier_id.name or "Unknown",
             "trackingLink": self.carrier_tracking_url or "",
-            "trackingNumber": self.carrier_tracking_ref or "",
+            "trackingNumber": self._shoppingfeed_tracking_number(),
         }
 
     def _shoppingfeed_notify_shipment(self):
