@@ -156,6 +156,22 @@ class TestShoppingfeedIntegration(AccountTestInvoicingCommon):
         )
         self.assertNotEqual(c1, c2)
 
+    def test_invalid_billing_vat_goes_to_comment(self):
+        billing = {
+            "firstName": "John",
+            "lastName": "Invalid",
+            "email": "john.invalid@example.com",
+            "country": "ES",
+        }
+        partner = self.env["sale.order"]._shoppingfeed_prepare_partner(
+            billing,
+            self.sf_store,
+            additional_fields={"buyer_tax_registration_id": "12345678A"},
+        )
+        self.assertFalse(partner.vat)
+        self.assertIn("Shoppingfeed invalid VAT", partner.comment)
+        self.assertIn("12345678A", partner.comment)
+
     def test_invoice_auto_paid_on_post(self):
         """Invoice from a SF order with auto_pay=True is paid on confirmation."""
         self.partner_a.property_inbound_payment_method_line_id = (

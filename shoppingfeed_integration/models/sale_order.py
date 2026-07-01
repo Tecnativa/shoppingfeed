@@ -1,4 +1,5 @@
-# Copyright 2025 Juan Carlos Oñate - Tecnativa <juancarlos.onate@tecnativa.com>
+# Copyright 2025 Tecnativa - Juan Carlos Oñate
+# Copyright 2026 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 import json
 from datetime import datetime, timezone
@@ -6,7 +7,7 @@ from datetime import datetime, timezone
 import requests
 from markupsafe import Markup
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 
 class SaleOrder(models.Model):
@@ -127,21 +128,16 @@ class SaleOrder(models.Model):
             or af.get("buyer_identification_number")
             or af.get("buyer_identifier_number")
         )
-        # Reuse an existing partner with the same VAT instead of duplicating it.
-        if vat:
-            existing = self.env["res.partner"].search(
-                [
-                    ("vat", "=", vat),
-                    ("parent_id", "=", False),
-                    ("company_id", "in", [store.company_id.id, False]),
-                ],
-                limit=1,
-            )
-            if existing:
-                return existing
         country = self.env["res.country"].search(
             [("code", "=", billing.get("country"))], limit=1
         )
+        vat_vals = {}
+        self._shoppingfeed_prepare_partner_identification(
+            vat_vals, vat, country, is_company
+        )
+        existing = self._shoppingfeed_find_existing_partner(vat_vals, store)
+        if existing:
+            return existing
         phone = billing.get("phone") or billing.get("mobilePhone")
         phone = self._shoppingfeed_format_phone(phone, country)
         vals = {
@@ -156,25 +152,14 @@ class SaleOrder(models.Model):
             "country_id": country.id,
             "company_id": store.company_id.id,
         }
-        vat_valid = False
-        if vat:
-            vals["vat"] = vat
-            if country:
-                vat_valid = self._shoppingfeed_valid_vat(vat, country, is_company)
-                if vat_valid:
-                    if len(vat) > 1 and not vat[1].isalpha():
-                        vals["vat"] = f"{country.code}{vat}"
+        vals.update(vat_vals)
         if channel and channel.account_id:
             vals["property_account_receivable_id"] = channel.account_id.id
         if channel and channel.payment_method_line_id:
             vals["property_inbound_payment_method_line_id"] = (
                 channel.payment_method_line_id.id
             )
-        return (
-            self.env["res.partner"]
-            .with_context(no_vat_validation=not vat_valid)
-            .create(vals)
-        )
+        return self.env["res.partner"].create(vals)
 
     @api.model
     def _shoppingfeed_valid_vat(self, vat, country, is_company):
@@ -182,6 +167,44 @@ class SaleOrder(models.Model):
         if self.env["res.partner"]._run_vat_test(vat, country, is_company) is False:
             return False
         return True
+
+    @api.model
+    def _shoppingfeed_find_existing_partner(self, vals, store):
+        """Reuse partners by identifiers prepared from Shoppingfeed data."""
+        if not vals.get("vat"):
+            return self.env["res.partner"]
+        return self.env["res.partner"].search(
+            [
+                ("vat", "=", vals["vat"]),
+                ("parent_id", "=", False),
+                ("company_id", "in", [store.company_id.id, False]),
+            ],
+            limit=1,
+        )
+
+    @api.model
+    def _shoppingfeed_format_vat(self, vat, country):
+        if len(vat) > 1 and not vat[1].isalpha():
+            return f"{country.code}{vat}"
+        return vat
+
+    @api.model
+    def _shoppingfeed_prepare_partner_identification(
+        self, vals, vat, country, is_company
+    ):
+        """Add a valid VAT or route an invalid document to extension hooks."""
+        if not vat:
+            return False
+        if country and self._shoppingfeed_valid_vat(vat, country, is_company):
+            vals["vat"] = self._shoppingfeed_format_vat(vat, country)
+            return True
+        self._shoppingfeed_prepare_invalid_vat_vals(vals, vat)
+        return False
+
+    @api.model
+    def _shoppingfeed_prepare_invalid_vat_vals(self, vals, vat):
+        vals["comment"] = _("Shoppingfeed invalid VAT: %s") % vat
+        return vals
 
     def _shoppingfeed_prepare_shipping(self, shipping, partner, store):
         # Prepare or create delivery address for the Shoppingfeed order.
@@ -195,7 +218,6 @@ class SaleOrder(models.Model):
         vat = partner.vat
         shipping_vals = {
             "parent_id": partner.id,
-            "vat": vat,
             "type": "delivery",
             "name": (
                 f"{shipping.get('firstName', '')} " f"{shipping.get('lastName', '')}"
@@ -210,13 +232,9 @@ class SaleOrder(models.Model):
             "country_id": country.id,
             "company_id": store.company_id.id,
         }
-        vat_valid = False
-        if vat and country:
-            vat_valid = self._shoppingfeed_valid_vat(vat, country, False)
-            if vat_valid:
-                if len(vat) > 1 and not vat[1].isalpha():
-                    shipping_vals["vat"] = f"{country.code}{vat}"
-
+        self._shoppingfeed_prepare_partner_identification(
+            shipping_vals, vat, country, False
+        )
         shipping_partner = self.env["res.partner"].search(
             [
                 ("parent_id", "=", partner.id),
@@ -226,9 +244,7 @@ class SaleOrder(models.Model):
                 ("zip", "=", shipping_vals["zip"]),
             ],
             limit=1,
-        ) or self.env["res.partner"].with_context(
-            no_vat_validation=not vat_valid
-        ).create(shipping_vals)
+        ) or self.env["res.partner"].create(shipping_vals)
         return shipping_partner
 
     def _shoppingfeed_clean_product_reference(self, reference):

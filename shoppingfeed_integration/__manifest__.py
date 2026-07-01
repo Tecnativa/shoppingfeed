@@ -16,6 +16,7 @@
         "sale_order_type",
         "account_payment_sale",
         "phone_validation",
+        "base_vat",
     ],
     "data": [
         "security/shoppingfeed_security.xml",
