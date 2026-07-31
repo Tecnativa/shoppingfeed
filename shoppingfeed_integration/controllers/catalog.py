@@ -103,13 +103,13 @@ class CatalogController(http.Controller):
         # of exposing the raw stored format.
         field = self._IMAGE_FIELD_BY_MODEL.get(model)
         if not field:
-            return request.not_found()
+            raise request.not_found()
         try:
             record = request.env["ir.binary"]._find_record(
                 res_model=model, res_id=res_id, field=field
             )
         except UserError:
-            return request.not_found()
+            raise request.not_found() from None
         jpeg_data = self._get_cached_jpeg(model, field, record)
         if jpeg_data is None:
             # No pre-existing JPEG to reuse (image not uploaded through the
