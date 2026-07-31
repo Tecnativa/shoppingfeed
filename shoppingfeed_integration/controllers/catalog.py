@@ -1,16 +1,35 @@
 # Copyright 2025 Juan Carlos Oñate - Tecnativa <juancarlos.onate@tecnativa.com>
+# Copyright 2026 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import tempfile
 from datetime import datetime
+from io import BytesIO
 
+# Registers the WebP codec with PIL. Odoo's own odoo/tools/image.py only
+# calls Image.preinit() (a restricted plugin subset) and its ImageProcess
+# explicitly refuses to decode WebP at all (see the "don't process WEBP"
+# branch there), so odoo.tools.image_process() is a no-op on WebP source -
+# can't be used to convert it. Import PIL directly instead.
+import PIL.WebPImagePlugin  # noqa: F401
 from lxml import etree
+from PIL import Image
 
 from odoo import http, release
+from odoo.exceptions import UserError
 from odoo.http import Response, request
+from odoo.osv.expression import OR
 
 
 class CatalogController(http.Controller):
+    # Models/fields whose images are exposed through /shoppingfeed/image.
+    # Kept as an explicit whitelist (rather than accepting an arbitrary
+    # field from the URL) since the route is public.
+    _IMAGE_FIELD_BY_MODEL = {
+        "product.product": "image_1920",
+        "product.image": "image_1920",
+    }
+
     _PRODUCT_DATA_FIELDS = [
         "barcode",
         "default_code",
@@ -67,6 +86,109 @@ class CatalogController(http.Controller):
             content_type="application/xml;charset=utf-8",
             status=200,
             direct_passthrough=True,
+        )
+
+    @http.route(
+        ["/shoppingfeed/image/<string:model>/<int:res_id>"],
+        type="http",
+        auth="public",
+        readonly=True,
+        save_session=False,
+    )
+    def catalog_image(self, model, res_id, **kwargs):
+        # Shoppingfeed pushes a single catalog feed to several marketplaces,
+        # and some of them reject the WebP format Odoo stores product images
+        # in by default (see convert_to_webp on the product views). Always
+        # re-encode to JPEG here, regardless of the store/channel, instead
+        # of exposing the raw stored format.
+        field = self._IMAGE_FIELD_BY_MODEL.get(model)
+        if not field:
+            return request.not_found()
+        try:
+            record = request.env["ir.binary"]._find_record(
+                res_model=model, res_id=res_id, field=field
+            )
+        except UserError:
+            return request.not_found()
+        jpeg_data = self._get_cached_jpeg(model, field, record)
+        if jpeg_data is None:
+            # No pre-existing JPEG to reuse (image not uploaded through the
+            # standard widget, e.g. import/connector): re-encode on the fly
+            # as a last resort.
+            stream = request.env["ir.binary"]._get_image_stream_from(record, field)
+            data = stream.read()
+            if stream.mimetype in ("image/jpeg", "image/jpg"):
+                jpeg_data = data
+            else:
+                jpeg_data = self._to_jpeg(data)
+        response = request.make_response(
+            jpeg_data, headers=[("Content-Type", "image/jpeg")]
+        )
+        response.headers["Cache-Control"] = "public, max-age=86400"
+        return response
+
+    def _to_jpeg(self, data):
+        buffer = BytesIO()
+        with Image.open(BytesIO(data)) as image:
+            image.convert("RGB").save(buffer, format="JPEG", quality=90)
+        return buffer.getvalue()
+
+    def _get_cached_jpeg(self, model, field, record):
+        # convert_to_webp uploads (ImageField/X2ManyMediaViewer JS) already
+        # store a sibling JPEG attachment for report use; reuse it instead
+        # of re-encoding. Returns None if no such attachment exists.
+        Attachment = request.env["ir.attachment"].sudo()
+        field_attachment = self._find_field_attachment(Attachment, model, field, record)
+        if not field_attachment:
+            return None
+        if field_attachment.mimetype == "image/jpeg":
+            return field_attachment.raw
+        jpeg_sibling = Attachment.search(
+            [
+                ("res_model", "=", "ir.attachment"),
+                ("res_id", "=", field_attachment.id),
+                ("mimetype", "=", "image/jpeg"),
+            ],
+            limit=1,
+        )
+        return jpeg_sibling.raw if jpeg_sibling else None
+
+    def _find_field_attachment(self, Attachment, model, field, record):
+        # product.product's image_1920 is a non-stored compute (falls back
+        # to image_variant_1920, then to the template's image_1920), so
+        # fields.Binary._get_attrs forces attachment=False on it - there is
+        # no attachment directly under (product.product, image_1920).
+        # Resolve to whichever field actually backs the pixels, same
+        # fallback _get_main_images() uses below: a variant-specific image
+        # wins over the template's.
+        if model == "product.product":
+            attachments = Attachment.search(
+                OR(
+                    [
+                        [
+                            ("res_model", "=", "product.product"),
+                            ("res_field", "=", "image_variant_1920"),
+                            ("res_id", "=", record.id),
+                        ],
+                        [
+                            ("res_model", "=", "product.template"),
+                            ("res_field", "=", "image_1920"),
+                            ("res_id", "=", record.product_tmpl_id.id),
+                        ],
+                    ]
+                )
+            )
+            by_model = {a.res_model: a for a in attachments}
+            return by_model.get("product.product") or by_model.get(
+                "product.template", Attachment
+            )
+        return Attachment.search(
+            [
+                ("res_model", "=", model),
+                ("res_field", "=", field),
+                ("res_id", "=", record.id),
+            ],
+            limit=1,
         )
 
     def _get_product_domain_for_store(self, store):
@@ -614,11 +736,11 @@ class CatalogController(http.Controller):
             all_images = product_images[: store.exported_image_count]
         if self._has_main_image(product, batch_context):
             etree.SubElement(images_el, "image", type="main").text = etree.CDATA(
-                f"{base_url}/web/image/product.product/{product.id}/image_1920"
+                f"{base_url}/shoppingfeed/image/product.product/{product.id}"
             )
         for image_id in all_images:
             etree.SubElement(images_el, "image").text = etree.CDATA(
-                f"{base_url}/web/image/product.image/{image_id}/image_1920"
+                f"{base_url}/shoppingfeed/image/product.image/{image_id}"
             )
 
     def _has_main_image(self, product, batch_context=None):

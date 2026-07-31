@@ -229,6 +229,7 @@ Contributors
 - `Tecnativa <https://www.tecnativa.com>`__:
 
   - Juan Carlos Oñate
+  - Sergio Teruel
 
 Maintainers
 -----------
