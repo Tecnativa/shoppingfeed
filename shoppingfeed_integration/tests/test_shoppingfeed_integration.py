@@ -321,3 +321,52 @@ class TestShoppingfeedIntegration(AccountTestInvoicingCommon):
                 }
             ],
         )
+
+    def test_price_preserved_when_fiscal_position_changes(self):
+        """The tax-included total the customer paid on Shoppingfeed must not
+        change when the order's taxes get recomputed later (e.g. a fiscal
+        position change triggered by a VIES validation), even though
+        price_unit is always stored tax-excluded.
+        """
+        self.product_a.taxes_id = self.tax_sale_a
+        order_dict = {
+            "id": "SF-PRICE-001",
+            "reference": "MKT-PRICE-001",
+            "status": "waiting_shipment",
+            "payment": {"currency": "EUR", "shippingAmount": 0.0},
+            "items": [{"reference": "TEST-SKU-001", "price": 12.50, "quantity": 1}],
+            "itemsReferencesAliases": {},
+            "storeId": "test",
+        }
+        sale_order = self.env["sale.order"]._shoppingfeed_create_sale_order(
+            self.sf_store,
+            order_dict,
+            self.partner_a,
+            None,
+            self.sf_channel,
+            False,
+            False,
+        )
+        self.assertAlmostEqual(sale_order.amount_total, 12.50, places=2)
+
+        zero_tax = self.tax_sale_a.copy({"name": "Zero tax test", "amount": 0.0})
+        fiscal_position = self.env["account.fiscal.position"].create(
+            {
+                "name": "Test intracom",
+                "company_id": self.env.company.id,
+                "tax_ids": [
+                    Command.create(
+                        {
+                            "tax_src_id": self.tax_sale_a.id,
+                            "tax_dest_id": zero_tax.id,
+                        }
+                    )
+                ],
+            }
+        )
+        sale_order.fiscal_position_id = fiscal_position
+        sale_order.action_update_taxes()
+
+        self.assertEqual(sale_order.order_line.tax_id, zero_tax)
+        self.assertAlmostEqual(sale_order.order_line.price_unit, 12.50, places=2)
+        self.assertAlmostEqual(sale_order.amount_total, 12.50, places=2)

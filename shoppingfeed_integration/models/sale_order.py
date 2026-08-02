@@ -352,6 +352,25 @@ class SaleOrder(models.Model):
         )
         return tax_data
 
+    def _shoppingfeed_get_original_price_unit(self, line):
+        """Recover the tax-included unit price the customer paid for `line`,
+        as originally sent by Shoppingfeed, from the stored raw order data.
+        """
+        self.ensure_one()
+        if not self.shoppingfeed_raw_data:
+            return False
+        order = json.loads(self.shoppingfeed_raw_data)
+        if line.is_delivery:
+            return (order.get("payment") or {}).get("shippingAmount", 0.0)
+        aliases = order.get("itemsReferencesAliases", {})
+        for item in order.get("items", []):
+            clean_ref = self._shoppingfeed_resolve_product_reference(
+                item.get("reference"), aliases
+            )
+            if clean_ref and line.product_id.default_code == clean_ref:
+                return item.get("price", 0.0)
+        return False
+
     def _shoppingfeed_prepare_order_line(self, store, item, new_order, aliases=None):
         ref = item.get("reference")
         clean_ref = self._shoppingfeed_resolve_product_reference(ref, aliases)
@@ -536,4 +555,25 @@ class SaleOrderLine(models.Model):
         self.filtered(
             lambda sol: sol.order_id._is_shoppingfeed_disable_invoicing()
         ).invoice_status = "no"
+        return res
+
+    def _compute_tax_id(self):
+        """Keep the tax-included total the customer paid on Shoppingfeed
+        orders unchanged whenever taxes are recomputed later (e.g. a fiscal
+        position change triggered by a VIES validation): re-derive
+        price_unit from the original price stored in shoppingfeed_raw_data
+        and the tax now applying, the same way it was computed on import.
+        """
+        res = super()._compute_tax_id()
+        for line in self.filtered(lambda sol: sol.order_id.shoppingfeed_order_ref):
+            original_price = line.order_id._shoppingfeed_get_original_price_unit(line)
+            if not original_price:
+                continue
+            tax_data = line.tax_id.with_context(force_price_include=True).compute_all(
+                original_price,
+                currency=line.order_id.currency_id,
+                quantity=1.0,
+                partner=line.order_id.partner_shipping_id,
+            )
+            line.price_unit = tax_data["total_excluded"]
         return res
