@@ -94,6 +94,7 @@ class SaleOrder(models.Model):
         if store.date_download_since:
             params["since"] = store.date_download_since.isoformat(timespec="seconds")
         response = requests.get(url, headers=headers, params=params, timeout=30)
+        response.raise_for_status()
         return response.json().get("_embedded", {}).get("order", [])
 
     @api.model
@@ -267,7 +268,7 @@ class SaleOrder(models.Model):
         # Return the cleaned original reference
         return self._shoppingfeed_clean_product_reference(item_reference)
 
-    def _shoppingfeed_acknowledge_order(self, store, order):
+    def _shoppingfeed_acknowledge_order(self, store, order, sale_order=None):
         # Acknowledge the imported order to Shoppingfeed.
         if store._shoppingfeed_is_demo_mode():
             return
@@ -276,16 +277,23 @@ class SaleOrder(models.Model):
             "Authorization": store.access_token,
             "Content-Type": "application/json",
         }
-        payload = {
-            "order": [
-                {
-                    "id": int(order.get("id")),
-                    "status": "success",
-                    "acknowledgedAt": datetime.now(timezone.utc).isoformat(),
-                }
-            ]
+        order_payload = {
+            "id": int(order.get("id")),
+            "status": "success",
+            "acknowledgedAt": datetime.now(timezone.utc).isoformat(),
         }
+        if sale_order:
+            order_payload["storeReference"] = sale_order.name
+        payload = {"order": [order_payload]}
         requests.post(url, json=payload, headers=headers, timeout=30)
+
+    def _shoppingfeed_try_acknowledge_order(self, store, order, channel, sale_order):
+        try:
+            self._shoppingfeed_acknowledge_order(store, order, sale_order)
+        except Exception as e:
+            self._create_shoppingfeed_log(
+                store, order, channel, f"Error acknowledging order: {e}"
+            )
 
     def _create_shoppingfeed_log(self, store, order, channel, error_message):
         self.env["shoppingfeed.log"].create(
@@ -478,14 +486,32 @@ class SaleOrder(models.Model):
             )
         )
         for store in stores:
-            self.with_company(store.company_id)._import_orders_from_shoppingfeed(store)
+            try:
+                self.with_company(store.company_id)._import_orders_from_shoppingfeed(
+                    store
+                )
+            except Exception as e:
+                # The cursor may be aborted: reset it to be able to log.
+                self.env.cr.rollback()
+                self.env["shoppingfeed.log"].sudo().create(
+                    {
+                        "name": store.name,
+                        "store_id": store.id,
+                        "error_message": f"Error importing orders: {e}",
+                    }
+                )
+                # Keep the log even if a later store fails.
+                self.env.cr.commit()  # pylint: disable=invalid-commit
 
     def _import_orders_from_shoppingfeed(self, store):
         if not store.import_orders:
             return
         for order in self._shoppingfeed_fetch_orders(store):
             ext_id = str(order.get("id"))
-            if self.search([("shoppingfeed_order_ref", "=", ext_id)], limit=1):
+            existing = self.search([("shoppingfeed_order_ref", "=", ext_id)], limit=1)
+            if existing:
+                # Its acknowledgment was lost, otherwise it would not be resent.
+                self._shoppingfeed_try_acknowledge_order(store, order, False, existing)
                 continue
             channel = (order.get("_embedded") or {}).get("channel", {})
             channel_name = channel.get("name", "Unknown Marketplace")
@@ -539,11 +565,14 @@ class SaleOrder(models.Model):
                     )
                     if sf_channel.auto_confirm_sale:
                         new_sale.action_confirm()
-                    self._shoppingfeed_acknowledge_order(store, order)
             except Exception as e:
                 error_msg = f"Error creating order: {str(e)}"
                 self._create_shoppingfeed_log(store, order, sf_channel, error_msg)
                 continue
+            # Commit before acknowledging: Shoppingfeed never resends an
+            # acknowledged order, so a rollback after the ack would lose it.
+            self.env.cr.commit()  # pylint: disable=invalid-commit
+            self._shoppingfeed_try_acknowledge_order(store, order, sf_channel, new_sale)
 
 
 class SaleOrderLine(models.Model):
