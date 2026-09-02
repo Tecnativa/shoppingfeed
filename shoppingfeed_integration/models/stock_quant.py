@@ -39,4 +39,4 @@ class StockQuant(models.Model):
                     "Authorization": store.access_token,
                     "Content-Type": "application/json",
                 }
-                requests.put(url, headers=headers, json=payload, timeout=30)
+                requests.put(url, headers=headers, json=payload, timeout=60)

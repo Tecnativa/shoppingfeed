@@ -379,7 +379,7 @@ class ShoppingfeedStore(models.Model):
             "https://api.shopping-feed.com/v1/auth",
             json=payload,
             headers=headers,
-            timeout=20,
+            timeout=60,
         )
         if auth_response.status_code != 200:
             raise ValueError(f"Authentication failed: {auth_response.text}")
@@ -399,7 +399,7 @@ class ShoppingfeedStore(models.Model):
         info_response = requests.get(
             "https://api.shopping-feed.com/v1/me",
             headers=info_headers,
-            timeout=20,
+            timeout=60,
         )
         if info_response.status_code != 200:
             raise ValueError(f"Failed to retrieve account info: {info_response.text}")
@@ -436,7 +436,7 @@ class ShoppingfeedStore(models.Model):
             return
         if not channel_link.startswith("http"):
             channel_link = f"https://api.shopping-feed.com{channel_link}"
-        channel_response = requests.get(channel_link, headers=info_headers, timeout=20)
+        channel_response = requests.get(channel_link, headers=info_headers, timeout=60)
         if channel_response.status_code != 200:
             return
         data = channel_response.json()

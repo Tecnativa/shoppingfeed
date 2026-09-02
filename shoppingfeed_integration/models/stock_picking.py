@@ -70,7 +70,7 @@ class StockPicking(models.Model):
                 "Content-Type": "application/json",
             }
             payload = {"order": [order_payload]}
-            response = requests.post(url, json=payload, headers=headers, timeout=30)
+            response = requests.post(url, json=payload, headers=headers, timeout=60)
             _logger.info(
                 f"Envio de tracking a SF after "
                 f"response status: {response.status_code} "

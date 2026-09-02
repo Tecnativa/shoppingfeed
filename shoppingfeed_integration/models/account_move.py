@@ -55,7 +55,7 @@ class AccountMove(models.Model):
             files = {"files[]": (pdf_file.name, pdf_file, "application/pdf")}
             data = {"body": json.dumps(payload)}
             response = requests.post(
-                url, headers=headers, files=files, data=data, timeout=30
+                url, headers=headers, files=files, data=data, timeout=60
             )
             if response.ok:
                 move.message_post(

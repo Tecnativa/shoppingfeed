@@ -59,7 +59,7 @@ class ShoppingfeedTicket(models.Model):
                 "Authorization": store.access_token,
                 "Content-Type": "application/json",
             }
-            response = requests.get(url, headers=headers, timeout=30)
+            response = requests.get(url, headers=headers, timeout=60)
             if response.status_code != 200:
                 continue
             data = response.json() or {}

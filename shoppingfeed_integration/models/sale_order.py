@@ -93,7 +93,7 @@ class SaleOrder(models.Model):
             params["status"] = store.filter_order_status
         if store.date_download_since:
             params["since"] = store.date_download_since.isoformat(timespec="seconds")
-        response = requests.get(url, headers=headers, params=params, timeout=30)
+        response = requests.get(url, headers=headers, params=params, timeout=60)
         response.raise_for_status()
         return response.json().get("_embedded", {}).get("order", [])
 
@@ -285,7 +285,7 @@ class SaleOrder(models.Model):
         if sale_order:
             order_payload["storeReference"] = sale_order.name
         payload = {"order": [order_payload]}
-        requests.post(url, json=payload, headers=headers, timeout=30)
+        requests.post(url, json=payload, headers=headers, timeout=60)
 
     def _shoppingfeed_try_acknowledge_order(self, store, order, channel, sale_order):
         try:
