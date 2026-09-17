@@ -71,6 +71,25 @@ class SaleOrder(models.Model):
         )
         return res
 
+    def _get_invoiceable_lines(self, final=False):
+        lines = super()._get_invoiceable_lines(final=final)
+        return lines.filtered(
+            lambda line: not line.order_id._is_shoppingfeed_disable_invoicing()
+        )
+
+    def _nothing_to_invoice_error_message(self):
+        error = super()._nothing_to_invoice_error_message()
+        channels = self.filtered(
+            lambda so: so._is_shoppingfeed_disable_invoicing()
+        ).shoppingfeed_channel_id
+        if channels:
+            error += self.env._(
+                "\nThe %s channel issues its own invoices, so these orders are "
+                "not invoiced in Odoo.",
+                ", ".join(channels.mapped("name")),
+            )
+        return error
+
     @api.depends("shoppingfeed_channel_id")
     def _compute_amount_to_invoice(self):
         res = super()._compute_amount_to_invoice()

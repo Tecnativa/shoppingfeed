@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import Command
+from odoo.exceptions import UserError
 from odoo.tests import tagged
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
@@ -370,3 +371,36 @@ class TestShoppingfeedIntegration(AccountTestInvoicingCommon):
         self.assertEqual(sale_order.order_line.tax_id, zero_tax)
         self.assertAlmostEqual(sale_order.order_line.price_unit, 12.50, places=2)
         self.assertAlmostEqual(sale_order.amount_total, 12.50, places=2)
+
+    def test_channel_disabling_invoicing_has_no_invoiceable_lines(self):
+        self.product_a.invoice_policy = "order"
+        order = self.env["sale.order"].create(
+            {
+                "partner_id": self.partner_a.id,
+                "shoppingfeed_channel_id": self.sf_channel.id,
+                "order_line": [
+                    Command.create(
+                        {"product_id": self.product_a.id, "product_uom_qty": 1}
+                    )
+                ],
+            }
+        )
+        order.action_confirm()
+        # The channel invoices in Odoo as usual
+        self.assertTrue(order._get_invoiceable_lines())
+        # Once it issues its own invoices, nothing is invoiceable here
+        self.sf_channel.disable_invoicing = True
+        order.invalidate_recordset()
+        self.assertFalse(order._get_invoiceable_lines())
+        with self.assertRaises(UserError):
+            order._create_invoices()
+        # Orders of other channels invoiced along with it are not affected
+        other = order.copy(
+            {
+                "shoppingfeed_channel_id": self.sf_channel.copy(
+                    {"disable_invoicing": False}
+                ).id
+            }
+        )
+        other.action_confirm()
+        self.assertEqual((order | other)._get_invoiceable_lines().order_id, other)
