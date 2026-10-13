@@ -136,6 +136,20 @@ class TestShoppingfeedIntegration(AccountTestInvoicingCommon):
             billing, self.sf_store, channel=self.sf_channel, additional_fields=af_de
         )
         self.assertEqual(p1, p2)
+        moved = dict(billing, street="1 rue de la Gare", postalCode="L-1611")
+        order = SO._shoppingfeed_create_sale_order(
+            self.sf_store,
+            {"id": "SF-DEDUP-1", "billingAddress": moved, "items": []},
+            p2,
+            None,
+            self.sf_channel,
+            False,
+            False,
+        )
+        self.assertRecordValues(
+            order.partner_invoice_id,
+            [{"parent_id": p1.id, "type": "invoice", "street": "1 rue de la Gare"}],
+        )
         p3 = SO._shoppingfeed_prepare_partner(
             billing,
             self.sf_store,

@@ -226,7 +226,9 @@ class SaleOrder(models.Model):
         vals["comment"] = _("Shoppingfeed invalid VAT: %s") % vat
         return vals
 
-    def _shoppingfeed_prepare_shipping(self, shipping, partner, store):
+    def _shoppingfeed_prepare_shipping(
+        self, shipping, partner, store, address_type="delivery"
+    ):
         # Prepare or create delivery address for the Shoppingfeed order.
         if not shipping:
             return None
@@ -238,7 +240,7 @@ class SaleOrder(models.Model):
         vat = partner.vat
         shipping_vals = {
             "parent_id": partner.id,
-            "type": "delivery",
+            "type": address_type,
             "name": (
                 f"{shipping.get('firstName', '')} " f"{shipping.get('lastName', '')}"
             ).strip()
@@ -258,7 +260,7 @@ class SaleOrder(models.Model):
         shipping_partner = self.env["res.partner"].search(
             [
                 ("parent_id", "=", partner.id),
-                ("type", "=", "delivery"),
+                ("type", "=", address_type),
                 ("name", "=", shipping_vals["name"]),
                 ("street", "=", shipping_vals["street"]),
                 ("zip", "=", shipping_vals["zip"]),
@@ -437,9 +439,19 @@ class SaleOrder(models.Model):
             limit=1,
         )
         aliases = order.get("itemsReferencesAliases", {})
+        billing = order.get("billingAddress") or {}
+        invoice_partner = partner
+        if (billing.get("street") or "", billing.get("postalCode") or "") != (
+            partner.street or "",
+            partner.zip or "",
+        ):
+            invoice_partner = (
+                self._shoppingfeed_prepare_shipping(billing, partner, store, "invoice")
+                or partner
+            )
         so_vals = {
             "partner_id": partner.id,
-            "partner_invoice_id": partner.id,
+            "partner_invoice_id": invoice_partner.id,
             "partner_shipping_id": shipping_partner.id
             if shipping_partner
             else partner.id,
